@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตารางการแข่งขันฟุตบอล UDON POLICE CUP 2025</title>
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a clean look */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light grey background */
+        }
+        /* Custom styles if needed, but Tailwind is preferred */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #e2e8f0; /* Light grey border */
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #e2e8f0; /* Slightly darker header */
+            font-weight: 600; /* Semi-bold font for headers */
+        }
+        /* Style for editable fields */
+        .editable-field {
+            min-width: 50px; /* Adjusted minimum width for the editable cell */
+            cursor: default; /* Default cursor when locked */
+            padding: 6px 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .editable-field.is-editable {
+            cursor: text; /* Indicate that it's editable when unlocked */
+        }
+        .editable-field:not(.is-editable) {
+            background-color: #f8fafc; /* Lighter background when locked */
+            color: #6b7280; /* Slightly greyed out text when locked */
+        }
+        .editable-field.is-editable:hover {
+            background-color: #eef2f6; /* Slightly lighter on hover when editable */
+        }
+        .editable-field.is-editable:focus {
+            outline: 2px solid #3b82f6; /* Blue outline on focus when editable */
+            background-color: #ffffff; /* White background when actively editing */
+        }
+        #password-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+        #password-input {
+            flex-grow: 1; /* Allow input to take available space */
+            min-width: 150px; /* Minimum width for input */
+        }
+        .score-input::placeholder {
+            color: #9ca3af;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+    <!-- Main container with responsive padding and max-width -->
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8">
+        <!-- Tournament Title -->
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-blue-800 mb-4 md:mb-6">
+            ตารางการแข่งขันฟุตบอลเชื่อมความสามัคคี
+        </h1>
+        <h2 class="text-2xl md:text-3xl font-semibold text-center text-blue-700 mb-6 md:mb-8">
+            "UDON POLICE CUP 2025"
+        </h2>
+        <p class="text-center text-gray-600 mb-6">
+            ระหว่างวันที่ 16 มิ.ย. - 4 ก.ค. 68 ณ สนามกีฬาฟุตบอล ภ.จว.อุดรธานี
+        </p>
+
+        <!-- Password Control Section -->
+        <div class="mb-6 p-4 bg-gray-50 rounded-lg shadow-inner">
+            <h3 class="text-lg font-semibold text-gray-700 mb-3">การควบคุมการแก้ไข</h3>
+            <div id="password-controls">
+                <input type="password" id="password-input" placeholder="กรอกรหัสผ่านเพื่อแก้ไข"
+                       class="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="unlock-button"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    ปลดล็อกการแก้ไข
+                </button>
+                <button id="lock-button"
+                        class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                    ล็อกการแก้ไข
+                </button>
+            </div>
+            <p id="edit-status" class="text-center mt-2 text-sm text-gray-600">สถานะ: ล็อกอยู่</p>
+        </div>
+
+        <!-- Round 1 Schedule -->
+        <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-4 mt-8">
+            รอบแรก
+        </h3>
+        <div class="overflow-x-auto rounded-lg shadow-md">
+            <table class="min-w-full bg-white rounded-lg">
+                <thead class="bg-blue-100">
+                    <tr>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider rounded-tl-lg">วัน/เดือน/ปี</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">รอบ</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">คู่ที่</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">สาย</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">เวลา</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">คู่แข่งขันระหว่าง</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider rounded-tr-lg">ผลการแข่งขัน</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <!-- Data rows for Round 1, updated to match image precisely -->
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap">16 มิ.ย. 68</td>
+                        <td class="py-3 px-4 whitespace-nowrap">แรก</td>
+                        <td class="py-3 px-4 whitespace-nowrap">1</td>
+                        <td class="py-3 px-4 whitespace-nowrap">A</td>
+                        <td class="py-3 px-4 whitespace-nowrap">14:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">สร้างคอม vs หนองหาน</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M1" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">2</td>
+                        <td class="py-3 px-4 whitespace-nowrap">A</td>
+                        <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">โนนสะอาด vs บ้านผือ</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M2" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">3</td>
+                        <td class="py-3 px-4 whitespace-nowrap">B</td>
+                        <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">ทุ่งฝน vs ฝอ.ภ.จว.อุดรธานี</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M3" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap">18 มิ.ย. 68</td>
+                        <td class="py-3 px-4 whitespace-nowrap">แรก</td>
+                        <td class="py-3 px-4 whitespace-nowrap">4</td>
+                        <td class="py-3 px-4 whitespace-nowrap">B</td>
+                        <td class="py-3 px-4 whitespace-nowrap">14:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">ประจักษ์ vs วังสามหมอ</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M4" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">5</td>
+                        <td class="py-3 px-4 whitespace-nowrap">B</td>
+                        <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">ทุ่งฝน vs บ้านเทื่อม</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M5" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">6</td>
+                        <td class="py-3 px-4 whitespace-nowrap">A</td>
+                        <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">สร้างคอม vs สภ.เมืองฯ (008)</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M6" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap">20 มิ.ย. 68</td>
+                        <td class="py-3 px-4 whitespace-nowrap">แรก</td>
+                        <td class="py-3 px-4 whitespace-nowrap">7</td>
+                        <td class="py-3 px-4 whitespace-nowrap">A</td>
+                        <td class="py-3 px-4 whitespace-nowrap">14:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">โนนสะอาด vs สภ.เมืองฯ (008)</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M7" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">8</td>
+                        <td class="py-3 px-4 whitespace-nowrap">A</td>
+                        <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">หนองหาน vs บ้านผือ</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M8" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">9</td>
+                        <td class="py-3 px-4 whitespace-nowrap">B</td>
+                        <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">วังสามหมอ vs ฝอ.ภ.จว.อุดรธานี</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M9" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap">23 มิ.ย. 68</td>
+                        <td class="py-3 px-4 whitespace-nowrap">แรก</td>
+                        <td class="py-3 px-4 whitespace-nowrap">10</td>
+                        <td class="py-3 px-4 whitespace-nowrap">B</td>
+                        <td class="py-3 px-4 whitespace-nowrap">14:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">ทุ่งฝน vs วังสามหมอ</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M10" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">11</td>
+                        <td class="py-3 px-4 whitespace-nowrap">B</td>
+                        <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">ประจักษ์ vs บ้านเทื่อม</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M11" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">12</td>
+                        <td class="py-3 px-4 whitespace-nowrap">A</td>
+                        <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">สร้างคอม vs บ้านผือ</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M12" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap">25 มิ.ย. 68</td>
+                        <td class="py-3 px-4 whitespace-nowrap">แรก</td>
+                        <td class="py-3 px-4 whitespace-nowrap">13</td>
+                        <td class="py-3 px-4 whitespace-nowrap">A</td>
+                        <td class="py-3 px-4 whitespace-nowrap">14:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">หนองหาน vs โนนสะอาด</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M13" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">14</td>
+                        <td class="py-3 px-4 whitespace-nowrap">A</td>
+                        <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">บ้านผือ vs สภ.เมืองฯ (008)</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M14" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">15</td>
+                        <td class="py-3 px-4 whitespace-nowrap">B</td>
+                        <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">ประจักษ์ vs ฝอ.ภ.จว.อุดรธานี</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M15" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap">27 มิ.ย. 68</td>
+                        <td class="py-3 px-4 whitespace-nowrap">แรก</td>
+                        <td class="py-3 px-4 whitespace-nowrap">16</td>
+                        <td class="py-3 px-4 whitespace-nowrap">B</td>
+                        <td class="py-3 px-4 whitespace-nowrap">14:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">ทุ่งฝน vs ประจักษ์</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M16" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">17</td>
+                        <td class="py-3 px-4 whitespace-nowrap">B</td>
+                        <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">วังสามหมอ vs บ้านเทื่อม</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M17" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">18</td>
+                        <td class="py-3 px-4 whitespace-nowrap">A</td>
+                        <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">สร้างคอม vs โนนสะอาด</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M18" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap">30 มิ.ย. 68</td>
+                        <td class="py-3 px-4 whitespace-nowrap">แรก</td>
+                        <td class="py-3 px-4 whitespace-nowrap">19</td>
+                        <td class="py-3 px-4 whitespace-nowrap">A</td>
+                        <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">หนองหาน vs สภ.เมืองฯ (008)</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M19" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">20</td>
+                        <td class="py-3 px-4 whitespace-nowrap">B</td>
+                        <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap">บ้านเทื่อม vs ฝอ.ภ.จว.อุดรธานี</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M20" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Semi-Final Round Schedule -->
+        <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-4 mt-8">
+            รอบรองชนะเลิศ
+        </h3>
+        <div class="overflow-x-auto rounded-lg shadow-md">
+            <table class="min-w-full bg-white rounded-lg">
+                <thead class="bg-blue-100">
+                    <tr>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider rounded-tl-lg">วัน/เดือน/ปี</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">รอบ</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">คู่ที่</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">เวลา</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">คู่แข่งขันระหว่าง</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider rounded-tr-lg">ผลการแข่งขัน</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap">2 ก.ค. 68</td>
+                        <td class="py-3 px-4 whitespace-nowrap">รอบรอง</td>
+                        <td class="py-3 px-4 whitespace-nowrap">21</td>
+                        <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field" contenteditable="false" id="teams-SFM21">1A vs 2B</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-SFM21" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">22</td>
+                        <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field" contenteditable="false" id="teams-SFM22">1B vs 2A</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-SFM22" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Final Round Schedule -->
+        <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-4 mt-8">
+            รอบชิงชนะเลิศ
+        </h3>
+        <div class="overflow-x-auto rounded-lg shadow-md">
+            <table class="min-w-full bg-white rounded-lg">
+                <thead class="bg-blue-100">
+                    <tr>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider rounded-tl-lg">วัน/เดือน/ปี</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">รอบ</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">คู่ที่</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">เวลา</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">คู่แข่งขันระหว่าง</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider rounded-tr-lg">ผลการแข่งขัน</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap">4 ก.ค. 68</td>
+                        <td class="py-3 px-4 whitespace-nowrap">ชิงที่ 3</td>
+                        <td class="py-3 px-4 whitespace-nowrap">23</td>
+                        <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field" contenteditable="false" id="teams-FFM23">แพ้ คู่ 21 vs แพ้ คู่ 22</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-FFM23" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-4 whitespace-nowrap"></td>
+                        <td class="py-3 px-4 whitespace-nowrap">ชิงชนะเลิศ</td>
+                        <td class="py-3 px-4 whitespace-nowrap">24</td>
+                        <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field" contenteditable="false" id="teams-FFM24">ชนะ คู่ 21 vs ชนะ คู่ 22</td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-FFM24" placeholder="H-A (เช่น 2-1)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Team Lineups by Zone (These are reference, not for direct editing of standings) -->
+        <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-4 mt-8">
+            รายละเอียดสาย
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-blue-50 p-6 rounded-lg shadow-md">
+                <h4 class="text-lg md:text-xl font-semibold text-blue-800 mb-3">สาย A</h4>
+                <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                    <li>ที่ 1 โซน 1: สร้างคอม</li>
+                    <li>ที่ 2 โซน 2: หนองหาน</li>
+                    <li>ที่ 3 โซน 3: โนนสะอาด</li>
+                    <li>ที่ 4 โซน 4: บ้านผือ</li>
+                    <li>ที่ 5 โซน 5: สภ.เมืองฯ (008)</li>
+                </ul>
+            </div>
+            <div class="bg-blue-50 p-6 rounded-lg shadow-md">
+                <h4 class="text-lg md:text-xl font-semibold text-blue-800 mb-3">สาย B</h4>
+                <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                    <li>ที่ 1 โซน 1: ทุ่งฝน</li>
+                    <li>ที่ 2 โซน 2: ประจักษ์</li>
+                    <li>ที่ 3 โซน 3: วังสามหมอ</li>
+                    <li>ที่ 4 โซน 4: บ้านเทื่อม</li>
+                    <li>ที่ 5 โซน 5: ฝอ.ภ.จว.อุดรธานี</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Group A Summary Table -->
+        <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-4 mt-8">
+            ตารางสรุปผลการแข่งขัน สาย A
+        </h3>
+        <div class="overflow-x-auto rounded-lg shadow-md mb-8">
+            <table class="min-w-full bg-white rounded-lg">
+                <thead class="bg-blue-100">
+                    <tr>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider rounded-tl-lg">ทีม</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">แข่ง</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">ชนะ</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">เสมอ</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">แพ้</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">ได้</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">เสีย</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">ผลต่าง</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider rounded-tr-lg">คะแนน</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200" id="summary-A-tbody">
+                    <!-- These rows will be dynamically populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Group B Summary Table -->
+        <h3 class="text-xl md:text-2xl font-bold text-blue-600 mb-4 mt-8">
+            ตารางสรุปผลการแข่งขัน สาย B
+        </h3>
+        <div class="overflow-x-auto rounded-lg shadow-md mb-8">
+            <table class="min-w-full bg-white rounded-lg">
+                <thead class="bg-blue-100">
+                    <tr>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider rounded-tl-lg">ทีม</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">แข่ง</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">ชนะ</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">เสมอ</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">แพ้</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">ได้</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">เสีย</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider">ผลต่าง</th>
+                        <th class="py-3 px-4 text-sm font-medium text-blue-700 uppercase tracking-wider rounded-tr-lg">คะแนน</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200" id="summary-B-tbody">
+                    <!-- These rows will be dynamically populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="mt-12 p-6 bg-blue-50 rounded-xl shadow-md">
+            <h3 class="text-xl md:text-2xl font-bold text-blue-700 mb-4">สรุปผลการแข่งขัน "UDON POLICE CUP 2025"</h3>
+            <div id="summary-content" contenteditable="false" class="text-gray-700 leading-relaxed p-2 border border-gray-300 rounded editable-field min-h-[100px]">
+                <p>(กรุณากรอกสรุปผลการแข่งขันและทีมที่ชนะในแต่ละรอบที่นี่)</p>
+                <ul class="list-disc pl-5 text-gray-700 space-y-2 mt-4">
+                    <li>**ทีมชนะเลิศ:** [ชื่อทีมชนะเลิศ]</li>
+                    <li>**รองชนะเลิศอันดับ 1:** [ชื่อทีมรองชนะเลิศอันดับ 1]</li>
+                    <li>**รองชนะเลิศอันดับ 2 (อันดับ 3):** [ชื่อทีมรองชนะเลิศอันดับ 2]</li>
+                    <li>**ผู้ทำประตูสูงสุด:** [ชื่อนักเตะ] ([จำนวนประตู])</li>
+                    <li>**นักเตะยอดเยี่ยม:** [ชื่อนักเตะ]</li>
+                    <li>**ภาพรวมการแข่งขัน:** [เขียนสรุปภาพรวมการแข่งขันที่น่าสนใจ เหตุการณ์สำคัญ หรือบรรยากาศโดยรวม]</li>
+                </ul>
+            </div>
+            <p class="text-sm text-gray-500 mt-4">
+                *โปรดอัปเดตข้อมูลผลการแข่งขันและสรุปหลังจากแต่ละคู่และแต่ละรอบสิ้นสุดลง*
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD = "admin"; // รหัสผ่านสำหรับปลดล็อกการแก้ไข คุณสามารถเปลี่ยนเป็นรหัสผ่านที่คุณต้องการได้
+        let isEditingEnabled = false; // สถานะการแก้ไข
+
+        // Configuration for Round 1 matches (teams, groups)
+        const round1Matches = [
+            { id: "score-R1M1", team1: "สร้างคอม", team2: "หนองหาน", group: "A" },
+            { id: "score-R1M2", team1: "โนนสะอาด", team2: "บ้านผือ", group: "A" },
+            { id: "score-R1M3", team1: "ทุ่งฝน", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
+            { id: "score-R1M4", team1: "ประจักษ์", team2: "วังสามหมอ", group: "B" },
+            { id: "score-R1M5", team1: "ทุ่งฝน", team2: "บ้านเทื่อม", group: "B" },
+            { id: "score-R1M6", team1: "สร้างคอม", team2: "สภ.เมืองฯ (008)", group: "A" },
+            { id: "score-R1M7", team1: "โนนสะอาด", team2: "สภ.เมืองฯ (008)", group: "A" },
+            { id: "score-R1M8", team1: "หนองหาน", team2: "บ้านผือ", group: "A" },
+            { id: "score-R1M9", team1: "วังสามหมอ", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
+            { id: "score-R1M10", team1: "ทุ่งฝน", team2: "วังสามหมอ", group: "B" },
+            { id: "score-R1M11", team1: "ประจักษ์", team2: "บ้านเทื่อม", group: "B" },
+            { id: "score-R1M12", team1: "สร้างคอม", team2: "บ้านผือ", group: "A" },
+            { id: "score-R1M13", team1: "หนองหาน", team2: "โนนสะอาด", group: "A" },
+            { id: "score-R1M14", team1: "บ้านผือ", team2: "สภ.เมืองฯ (008)", group: "A" },
+            { id: "score-R1M15", team1: "ประจักษ์", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
+            { id: "score-R1M16", team1: "ทุ่งฝน", team2: "ประจักษ์", group: "B" },
+            { id: "score-R1M17", team1: "วังสามหมอ", team2: "บ้านเทื่อม", group: "B" },
+            { id: "score-R1M18", team1: "สร้างคอม", team2: "โนนสะอาด", group: "A" },
+            { id: "score-R1M19", team1: "หนองหาน", team2: "สภ.เมืองฯ (008)", group: "A" },
+            { id: "score-R1M20", team1: "บ้านเทื่อม", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
+        ];
+
+        // Initial team configuration for summary tables (used for names and initial zero stats)
+        const initialTeamConfig = {
+            A: {
+                'สร้างคอม': { name: 'สร้างคอม', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'A-saangkom-name' },
+                'หนองหาน': { name: 'หนองหาน', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'A-nonghan-name' },
+                'โนนสะอาด': { name: 'โนนสะอาด', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'A-nonsaad-name' },
+                'บ้านผือ': { name: 'บ้านผือ', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'A-banphue-name' },
+                'สภ.เมืองฯ (008)': { name: 'สภ.เมืองฯ (008)', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'A-saphmuang-name' },
+            },
+            B: {
+                'ทุ่งฝน': { name: 'ทุ่งฝน', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'B-tungfon-name' },
+                'ประจักษ์': { name: 'ประจักษ์', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'B-prajak-name' },
+                'วังสามหมอ': { name: 'วังสามหมอ', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'B-wangsamhor-name' },
+                'บ้านเทื่อม': { name: 'บ้านเทื่อม', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'B-banthuam-name' },
+                'ฝอ.ภ.จว.อุดรธานี': { name: 'ฝอ.ภ.จว.อุดรธานี', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'B-forporjor-name' },
+            }
+        };
+
+        // Function to set contenteditable status for all relevant editable fields
+        function setEditingStatus(canEdit) {
+            console.log('setEditingStatus called with:', canEdit); // Debugging log
+            document.querySelectorAll('.editable-field').forEach(field => {
+                // Only allow editing if the field is not a numeric summary stat (id does not contain specific stat keywords)
+                // or if it's the summary content block, or a team name field
+                if (field.id.startsWith('score-') || field.id.startsWith('teams-') || field.id === 'summary-content' || field.id.endsWith('-name')) {
+                    field.contentEditable = canEdit;
+                    if (canEdit) {
+                        field.classList.add('is-editable');
+                    } else {
+                        field.classList.remove('is-editable');
+                    }
+                } else {
+                    // For numeric summary fields, they should never be contenteditable
+                    field.contentEditable = false;
+                    field.classList.remove('is-editable'); // Ensure it's not styled as editable
+                }
+            });
+            isEditingEnabled = canEdit;
+            document.getElementById('edit-status').textContent = canEdit ? 'สถานะ: กำลังแก้ไข' : 'สถานะ: ล็อกอยู่';
+        }
+
+        // Function to parse a score string (e.g., "2-1") and return goals for/against
+        function parseScore(scoreString) {
+            const match = scoreString.match(/^(\d+)-(\d+)$/);
+            if (match) {
+                return {
+                    homeGoals: parseInt(match[1]),
+                    awayGoals: parseInt(match[2])
+                };
+            }
+            return null; // Invalid format
+        }
+
+        // Function to calculate and render group standings
+        function calculateAndRenderStandings() {
+            // Deep copy initial config to reset stats for calculation
+            const currentStandings = JSON.parse(JSON.stringify(initialTeamConfig));
+
+            // Process Round 1 matches
+            round1Matches.forEach(match => {
+                const scoreElement = document.getElementById(match.id);
+                const scoreText = scoreElement ? scoreElement.textContent.trim() : '';
+                const parsed = parseScore(scoreText);
+
+                if (parsed) {
+                    const { homeGoals, awayGoals } = parsed;
+
+                    // Update stats for home team
+                    const homeTeam = currentStandings[match.group][match.team1];
+                    if (homeTeam) { // Ensure team exists in config
+                        homeTeam.played++;
+                        homeTeam.gf += homeGoals;
+                        homeTeam.ga += awayGoals;
+                        homeTeam.gd = homeTeam.gf - homeTeam.ga;
+                        if (homeGoals > awayGoals) {
+                            homeTeam.won++;
+                            homeTeam.points += 3;
+                        } else if (homeGoals < awayGoals) {
+                            homeTeam.lost++;
+                        } else {
+                            homeTeam.drawn++;
+                            homeTeam.points += 1;
+                        }
+                    }
+
+                    // Update stats for away team
+                    const awayTeam = currentStandings[match.group][match.team2];
+                    if (awayTeam) { // Ensure team exists in config
+                        awayTeam.played++;
+                        awayTeam.gf += awayGoals;
+                        awayTeam.ga += homeGoals;
+                        awayTeam.gd = awayTeam.gf - awayTeam.ga;
+                        if (awayGoals > homeGoals) {
+                            awayTeam.won++;
+                            awayTeam.points += 3;
+                        } else if (awayGoals < homeGoals) {
+                            awayTeam.lost++;
+                        } else {
+                            awayTeam.drawn++;
+                            awayTeam.points += 1;
+                        }
+                    }
+                }
+            });
+
+            // Render standings for each group
+            ['A', 'B'].forEach(groupLetter => {
+                let teamsInGroup = Object.values(currentStandings[groupLetter]);
+
+                // Sort teams: points (desc), goal difference (desc), goals for (desc), then name (asc)
+                teamsInGroup.sort((a, b) => {
+                    if (b.points !== a.points) return b.points - a.points;
+                    if (b.gd !== a.gd) return b.gd - a.gd;
+                    if (b.gf !== a.gf) return b.gf - a.gf;
+                    // Use the name property directly from the team object
+                    const nameA = a.name;
+                    const nameB = b.name;
+                    return nameA.localeCompare(nameB);
+                });
+
+                const tbody = document.getElementById(`summary-${groupLetter}-tbody`);
+                tbody.innerHTML = ''; // Clear existing rows
+
+                teamsInGroup.forEach(team => {
+                    const row = tbody.insertRow();
+                    // Load team name from localStorage or use initial config name
+                    const teamNameDisplay = localStorage.getItem(team.nameId) || team.name;
+
+                    // Team name cell (editable for admin, not stats related)
+                    const nameCell = row.insertCell();
+                    nameCell.className = 'py-3 px-4 whitespace-nowrap editable-field';
+                    nameCell.contentEditable = isEditingEnabled; // Editable based on global state
+                    nameCell.id = team.nameId;
+                    nameCell.textContent = teamNameDisplay;
+
+                    // Numeric stats cells (not contenteditable)
+                    const playedCell = row.insertCell(); playedCell.textContent = team.played; playedCell.className = 'py-3 px-4 whitespace-nowrap text-center';
+                    const wonCell = row.insertCell(); wonCell.textContent = team.won; wonCell.className = 'py-3 px-4 whitespace-nowrap text-center';
+                    const drawnCell = row.insertCell(); drawnCell.textContent = team.drawn; drawnCell.className = 'py-3 px-4 whitespace-nowrap text-center';
+                    const lostCell = row.insertCell(); lostCell.textContent = team.lost; lostCell.className = 'py-3 px-4 whitespace-nowrap text-center';
+                    const gfCell = row.insertCell(); gfCell.textContent = team.gf; gfCell.className = 'py-3 px-4 whitespace-nowrap text-center';
+                    const gaCell = row.insertCell(); gaCell.textContent = team.ga; gaCell.className = 'py-3 px-4 whitespace-nowrap text-center';
+                    const gdCell = row.insertCell(); gdCell.textContent = team.gd; gdCell.className = 'py-3 px-4 whitespace-nowrap text-center';
+                    const pointsCell = row.insertCell(); pointsCell.textContent = team.points; pointsCell.className = 'py-3 px-4 whitespace-nowrap text-center';
+                });
+
+                // Re-add event listeners for team name cells after re-rendering
+                document.querySelectorAll(`#summary-${groupLetter}-tbody .editable-field[id$="-name"]`).forEach(nameField => {
+                    nameField.addEventListener('input', saveData);
+                });
+            });
+        }
+
+        // Function to load data from Local Storage
+        function loadData() {
+            console.log('loadData called.'); // Debugging log
+
+            // Load match scores first
+            document.querySelectorAll('.score-input').forEach(field => {
+                const fieldId = field.id;
+                const savedContent = localStorage.getItem(fieldId);
+                if (savedContent !== null) {
+                    field.textContent = savedContent;
+                } else {
+                    field.textContent = ''; // Clear default [ผล]
+                    field.setAttribute('placeholder', 'H-A (เช่น 2-1)'); // Ensure placeholder is visible
+                }
+            });
+
+            // Load semi-final/final team names and scores
+            document.querySelectorAll('.editable-field[id^="teams-"], .editable-field[id^="score-SFM"], .editable-field[id^="score-FFM"]').forEach(field => {
+                const fieldId = field.id;
+                const savedContent = localStorage.getItem(fieldId);
+                if (savedContent !== null) {
+                    field.textContent = savedContent;
+                } else {
+                    if (field.id.startsWith('score-')) {
+                        field.textContent = ''; // Clear default [ผล]
+                        field.setAttribute('placeholder', 'H-A (เช่น 2-1)');
+                    }
+                    // For team names in SF/Final, use initial hardcoded HTML content if no saved data
+                }
+            });
+
+            // Load summary content
+            const summaryContent = document.getElementById('summary-content');
+            const savedSummary = localStorage.getItem('summary-content');
+            if (savedSummary !== null) {
+                summaryContent.innerHTML = savedSummary;
+            } else {
+                // If no summary content saved, ensure the placeholder text is visible
+                 summaryContent.innerHTML = `<p>(กรุณากรอกสรุปผลการแข่งขันและทีมที่ชนะในแต่ละรอบที่นี่)</p>
+                    <ul class="list-disc pl-5 text-gray-700 space-y-2 mt-4">
+                        <li>**ทีมชนะเลิศ:** [ชื่อทีมชนะเลิศ]</li>
+                        <li>**รองชนะเลิศอันดับ 1:** [ชื่อทีมรองชนะเลิศอันดับ 1]</li>
+                        <li>**รองชนะเลิศอันดับ 2 (อันดับ 3):** [ชื่อทีมรองชนะเลิศอันดับ 2]</li>
+                        <li>**ผู้ทำประตูสูงสุด:** [ชื่อนักเตะ] ([จำนวนประตู])</li>
+                        <li>**นักเตะยอดเยี่ยม:** [ชื่อนักเตะ]</li>
+                        <li>**ภาพรวมการแข่งขัน:** [เขียนสรุปภาพรวมการแข่งขันที่น่าสนใจ เหตุการณ์สำคัญ หรือบรรยากาศโดยรวม]</li>
+                    </ul>`;
+            }
+
+            // After loading all individual field data, calculate and render standings
+            calculateAndRenderStandings();
+
+            // Always start locked for security
+            setEditingStatus(false);
+        }
+
+        // Function to save data to Local Storage (triggered by input event)
+        function saveData(event) {
+            const field = event.target;
+            const fieldId = field.id;
+
+            if (fieldId) {
+                if (fieldId === 'summary-content') {
+                    localStorage.setItem(fieldId, field.innerHTML);
+                } else {
+                    localStorage.setItem(fieldId, field.textContent);
+                }
+                // If a score input was changed, recalculate standings
+                if (field.classList.contains('score-input')) {
+                    calculateAndRenderStandings();
+                }
+            }
+        }
+
+        // Event listener for Unlock button
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData(); // Load existing data and set initial lock state
+
+            const passwordInput = document.getElementById('password-input');
+            const unlockButton = document.getElementById('unlock-button');
+            const lockButton = document.getElementById('lock-button');
+
+            unlockButton.addEventListener('click', () => {
+                console.log('Unlock button clicked.'); // Debugging log
+                console.log('Entered password:', passwordInput.value); // Debugging log
+                console.log('Correct password:', CORRECT_PASSWORD); // Debugging log
+
+                if (passwordInput.value === CORRECT_PASSWORD) {
+                    setEditingStatus(true);
+                    passwordInput.value = ''; // Clear password input
+                    console.log('Password correct. Editing enabled.'); // Debugging log
+                } else {
+                    document.getElementById('edit-status').textContent = 'สถานะ: ล็อกอยู่ (รหัสผ่านไม่ถูกต้อง)';
+                    passwordInput.value = ''; // Clear incorrect password
+                    console.log('Password incorrect.'); // Debugging log
+                }
+            });
+
+            lockButton.addEventListener('click', () => {
+                console.log('Lock button clicked. Editing disabled.'); // Debugging log
+                setEditingStatus(false);
+            });
+
+            // Add input listeners for all initially editable fields (scores, teams in semi/final, summary content, team names in summary tables)
+            document.querySelectorAll('.editable-field').forEach(field => {
+                field.addEventListener('input', saveData);
+            });
+        });
+    </script>
+</body>
+</html>
