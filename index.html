@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -37,6 +36,7 @@
         }
         .editable-field.is-editable {
             cursor: text; /* Indicate that it's editable when unlocked */
+            background-color: #ffffff; /* White background when editable */
         }
         .editable-field:not(.is-editable) {
             background-color: #f8fafc; /* Lighter background when locked */
@@ -64,9 +64,36 @@
             color: #9ca3af;
             font-style: italic;
         }
+        /* Message box styling */
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .message-box.show {
+            display: block;
+            opacity: 1;
+        }
+        .message-box.error {
+            background-color: #f44336; /* Red */
+        }
     </style>
 </head>
 <body class="p-4 md:p-8 lg:p-12">
+    <!-- Message Box -->
+    <div id="message-box" class="message-box"></div>
+
     <!-- Main container with responsive padding and max-width -->
     <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8">
         <!-- Tournament Title -->
@@ -117,25 +144,25 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                     <!-- Data rows for Round 1, updated to match image precisely -->
-                    <tr>
+                    <tr id="match-R1M1">
                         <td class="py-3 px-4 whitespace-nowrap">16 มิ.ย. 68</td>
                         <td class="py-3 px-4 whitespace-nowrap">แรก</td>
                         <td class="py-3 px-4 whitespace-nowrap">1</td>
                         <td class="py-3 px-4 whitespace-nowrap">A</td>
                         <td class="py-3 px-4 whitespace-nowrap">14:00 น.</td>
                         <td class="py-3 px-4 whitespace-nowrap">สร้างคอม vs หนองหาน</td>
-                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="2-1" id="score-R1M1" placeholder="2-1"></td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M1" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M2">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">2</td>
                         <td class="py-3 px-4 whitespace-nowrap">A</td>
                         <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
                         <td class="py-3 px-4 whitespace-nowrap">โนนสะอาด vs บ้านผือ</td>
-                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="1-3" id="score-R1M2" placeholder="H-A (เช่น 2-1)"></td>
+                        <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M2" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M3">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">3</td>
@@ -144,7 +171,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">ทุ่งฝน vs ฝอ.ภ.จว.อุดรธานี</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M3" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M4">
                         <td class="py-3 px-4 whitespace-nowrap">18 มิ.ย. 68</td>
                         <td class="py-3 px-4 whitespace-nowrap">แรก</td>
                         <td class="py-3 px-4 whitespace-nowrap">4</td>
@@ -153,7 +180,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">ประจักษ์ vs วังสามหมอ</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M4" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M5">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">5</td>
@@ -162,7 +189,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">ทุ่งฝน vs บ้านเทื่อม</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M5" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M6">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">6</td>
@@ -171,7 +198,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">สร้างคอม vs สภ.เมืองฯ (008)</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M6" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M7">
                         <td class="py-3 px-4 whitespace-nowrap">20 มิ.ย. 68</td>
                         <td class="py-3 px-4 whitespace-nowrap">แรก</td>
                         <td class="py-3 px-4 whitespace-nowrap">7</td>
@@ -180,7 +207,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">โนนสะอาด vs สภ.เมืองฯ (008)</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M7" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M8">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">8</td>
@@ -189,7 +216,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">หนองหาน vs บ้านผือ</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M8" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M9">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">9</td>
@@ -198,7 +225,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">วังสามหมอ vs ฝอ.ภ.จว.อุดรธานี</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M9" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M10">
                         <td class="py-3 px-4 whitespace-nowrap">23 มิ.ย. 68</td>
                         <td class="py-3 px-4 whitespace-nowrap">แรก</td>
                         <td class="py-3 px-4 whitespace-nowrap">10</td>
@@ -207,7 +234,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">ทุ่งฝน vs วังสามหมอ</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M10" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M11">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">11</td>
@@ -216,7 +243,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">ประจักษ์ vs บ้านเทื่อม</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M11" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M12">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">12</td>
@@ -225,7 +252,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">สร้างคอม vs บ้านผือ</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M12" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M13">
                         <td class="py-3 px-4 whitespace-nowrap">25 มิ.ย. 68</td>
                         <td class="py-3 px-4 whitespace-nowrap">แรก</td>
                         <td class="py-3 px-4 whitespace-nowrap">13</td>
@@ -234,7 +261,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">หนองหาน vs โนนสะอาด</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M13" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M14">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">14</td>
@@ -243,7 +270,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">บ้านผือ vs สภ.เมืองฯ (008)</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M14" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M15">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">15</td>
@@ -252,7 +279,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">ประจักษ์ vs ฝอ.ภ.จว.อุดรธานี</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M15" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M16">
                         <td class="py-3 px-4 whitespace-nowrap">27 มิ.ย. 68</td>
                         <td class="py-3 px-4 whitespace-nowrap">แรก</td>
                         <td class="py-3 px-4 whitespace-nowrap">16</td>
@@ -261,7 +288,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">ทุ่งฝน vs ประจักษ์</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M16" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M17">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">17</td>
@@ -270,7 +297,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">วังสามหมอ vs บ้านเทื่อม</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M17" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M18">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">18</td>
@@ -279,7 +306,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">สร้างคอม vs โนนสะอาด</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M18" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M19">
                         <td class="py-3 px-4 whitespace-nowrap">30 มิ.ย. 68</td>
                         <td class="py-3 px-4 whitespace-nowrap">แรก</td>
                         <td class="py-3 px-4 whitespace-nowrap">19</td>
@@ -288,7 +315,7 @@
                         <td class="py-3 px-4 whitespace-nowrap">หนองหาน vs สภ.เมืองฯ (008)</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-R1M19" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-R1M20">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">20</td>
@@ -318,20 +345,20 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <tr>
+                    <tr id="match-SFM21">
                         <td class="py-3 px-4 whitespace-nowrap">2 ก.ค. 68</td>
                         <td class="py-3 px-4 whitespace-nowrap">รอบรอง</td>
                         <td class="py-3 px-4 whitespace-nowrap">21</td>
                         <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
-                        <td class="py-3 px-4 whitespace-nowrap editable-field" contenteditable="false" id="teams-SFM21">1A vs 2B</td>
+                        <td class="py-3 px-4 whitespace-nowrap" id="teams-SFM21">1A vs 2B</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-SFM21" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-SFM22">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">22</td>
                         <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
-                        <td class="py-3 px-4 whitespace-nowrap editable-field" contenteditable="false" id="teams-SFM22">1B vs 2A</td>
+                        <td class="py-3 px-4 whitespace-nowrap" id="teams-SFM22">1B vs 2A</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-SFM22" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
                 </tbody>
@@ -355,20 +382,20 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <tr>
+                    <tr id="match-FFM23">
                         <td class="py-3 px-4 whitespace-nowrap">4 ก.ค. 68</td>
                         <td class="py-3 px-4 whitespace-nowrap">ชิงที่ 3</td>
                         <td class="py-3 px-4 whitespace-nowrap">23</td>
                         <td class="py-3 px-4 whitespace-nowrap">15:00 น.</td>
-                        <td class="py-3 px-4 whitespace-nowrap editable-field" contenteditable="false" id="teams-FFM23">แพ้ คู่ 21 vs แพ้ คู่ 22</td>
+                        <td class="py-3 px-4 whitespace-nowrap" id="teams-FFM23">แพ้ คู่ 21 vs แพ้ คู่ 22</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-FFM23" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
-                    <tr>
+                    <tr id="match-FFM24">
                         <td class="py-3 px-4 whitespace-nowrap"></td>
                         <td class="py-3 px-4 whitespace-nowrap">ชิงชนะเลิศ</td>
                         <td class="py-3 px-4 whitespace-nowrap">24</td>
                         <td class="py-3 px-4 whitespace-nowrap">16:00 น.</td>
-                        <td class="py-3 px-4 whitespace-nowrap editable-field" contenteditable="false" id="teams-FFM24">ชนะ คู่ 21 vs ชนะ คู่ 22</td>
+                        <td class="py-3 px-4 whitespace-nowrap" id="teams-FFM24">ชนะ คู่ 21 vs ชนะ คู่ 22</td>
                         <td class="py-3 px-4 whitespace-nowrap editable-field score-input" contenteditable="false" id="score-FFM24" placeholder="H-A (เช่น 2-1)"></td>
                     </tr>
                 </tbody>
@@ -472,360 +499,547 @@
         </div>
     </div>
 
-    <script>
-      const CORRECT_PASSWORD = "admin"; // รหัสผ่านสำหรับปลดล็อกการแก้ไข คุณสามารถเปลี่ยนเป็นรหัสผ่านที่คุณต้องการได้
-let isEditingEnabled = false; // สถานะการแก้ไข
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-// Configuration for Round 1 matches (teams, groups)
-const round1Matches = [
-    { id: "score-R1M1", team1: "สร้างคอม", team2: "หนองหาน", group: "A" },
-    { id: "score-R1M2", team1: "โนนสะอาด", team2: "บ้านผือ", group: "A" },
-    { id: "score-R1M3", team1: "ทุ่งฝน", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
-    { id: "score-R1M4", team1: "ประจักษ์", team2: "วังสามหมอ", group: "B" },
-    { id: "score-R1M5", team1: "ทุ่งฝน", team2: "บ้านเทื่อม", group: "B" },
-    { id: "score-R1M6", team1: "สร้างคอม", team2: "สภ.เมืองฯ (008)", group: "A" },
-    { id: "score-R1M7", team1: "โนนสะอาด", team2: "สภ.เมืองฯ (008)", group: "A" },
-    { id: "score-R1M8", team1: "หนองหาน", team2: "บ้านผือ", group: "A" },
-    { id: "score-R1M9", team1: "วังสามหมอ", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
-    { id: "score-R1M10", team1: "ทุ่งฝน", team2: "วังสามหมอ", group: "B" },
-    { id: "score-R1M11", team1: "ประจักษ์", team2: "บ้านเทื่อม", group: "B" },
-    { id: "score-R1M12", team1: "สร้างคอม", team2: "บ้านผือ", group: "A" },
-    { id: "score-R1M13", team1: "หนองหาน", team2: "โนนสะอาด", group: "A" },
-    { id: "score-R1M14", team1: "บ้านผือ", team2: "สภ.เมืองฯ (008)", group: "A" },
-    { id: "score-R1M15", team1: "ประจักษ์", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
-    { id: "score-R1M16", team1: "ทุ่งฝน", team2: "ประจักษ์", group: "B" },
-    { id: "score-R1M17", team1: "วังสามหมอ", team2: "บ้านเทื่อม", group: "B" },
-    { id: "score-R1M18", team1: "สร้างคอม", team2: "โนนสะอาด", group: "A" },
-    { id: "score-R1M19", team1: "หนองหาน", team2: "สภ.เมืองฯ (008)", group: "A" },
-    { id: "score-R1M20", team1: "บ้านเทื่อม", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
-];
+        // Firebase configuration and app ID are provided by the environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
 
-// Configuration for Semi-Final and Final matches
-const knockoutMatches = [
-    { id: "score-SFM21", teamsId: "teams-SFM21" },
-    { id: "score-SFM22", teamsId: "teams-SFM22" },
-    { id: "score-FFM23", teamsId: "teams-FFM23" },
-    { id: "score-FFM24", teamsId: "teams-FFM24" },
-];
+        // Initialize Firebase
+        let app;
+        let db;
+        let auth;
+        let userId = 'anonymous'; // Default to anonymous until authenticated
 
-const teamStats = {}; // To store team statistics for summary tables
-
-// Function to initialize team stats
-function initializeTeamStats() {
-    const allTeams = new Set();
-    round1Matches.forEach(match => {
-        allTeams.add(match.team1);
-        allTeams.add(match.team2);
-    });
-
-    allTeams.forEach(team => {
-        teamStats[team] = {
-            played: 0,
-            wins: 0,
-            draws: 0,
-            losses: 0,
-            goalsFor: 0,
-            goalsAgainst: 0,
-            goalDiff: 0,
-            points: 0,
-            group: round1Matches.find(m => m.team1 === team || m.team2 === team)?.group || ''
-        };
-    });
-}
-
-// Function to update team stats based on a match result
-function updateTeamStats(team1, score1, team2, score2) {
-    if (!teamStats[team1] || !teamStats[team2]) return; // Ensure teams exist in stats
-
-    teamStats[team1].played++;
-    teamStats[team2].played++;
-
-    teamStats[team1].goalsFor += score1;
-    teamStats[team1].goalsAgainst += score2;
-    teamStats[team1].goalDiff = teamStats[team1].goalsFor - teamStats[team1].goalsAgainst;
-
-    teamStats[team2].goalsFor += score2;
-    teamStats[team2].goalsAgainst += score1;
-    teamStats[team2].goalDiff = teamStats[team2].goalsFor - teamStats[team2].goalsAgainst;
-
-    if (score1 > score2) {
-        teamStats[team1].wins++;
-        teamStats[team1].points += 3;
-        teamStats[team2].losses++;
-    } else if (score2 > score1) {
-        teamStats[team2].wins++;
-        teamStats[team2].points += 3;
-        teamStats[team1].losses++;
-    } else {
-        teamStats[team1].draws++;
-        teamStats[team1].points += 1;
-        teamStats[team2].draws++;
-        teamStats[team2].points += 1;
-    }
-}
-
-// Function to render summary table
-function renderSummaryTable(groupId, tbodyId) {
-    const tbody = document.getElementById(tbodyId);
-    tbody.innerHTML = ''; // Clear existing rows
-
-    let teamsInGroup = Object.values(teamStats).filter(team => team.group === groupId);
-
-    // Sort teams by points, then goal difference, then goals for
-    teamsInGroup.sort((a, b) => {
-        if (b.points !== a.points) return b.points - a.points;
-        if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
-        return b.goalsFor - a.goalsFor;
-    });
-
-    teamsInGroup.forEach(team => {
-        const row = tbody.insertRow();
-        row.innerHTML = `
-            <td class="py-3 px-4 whitespace-nowrap">${team.name || team.teamName}</td>
-            <td class="py-3 px-4 whitespace-nowrap">${team.played}</td>
-            <td class="py-3 px-4 whitespace-nowrap">${team.wins}</td>
-            <td class="py-3 px-4 whitespace-nowrap">${team.draws}</td>
-            <td class="py-3 px-4 whitespace-nowrap">${team.losses}</td>
-            <td class="py-3 px-4 whitespace-nowrap">${team.goalsFor}</td>
-            <td class="py-3 px-4 whitespace-nowrap">${team.goalsAgainst}</td>
-            <td class="py-3 px-4 whitespace-nowrap">${team.goalDiff}</td>
-            <td class="py-3 px-4 whitespace-nowrap">${team.points}</td>
-        `;
-    });
-}
-
-// Store initial content of editable fields for comparison
-const initialContentMap = new Map();
-
-document.addEventListener('DOMContentLoaded', () => {
-    initializeTeamStats(); // Initialize team stats on load
-    updateEditableFields(); // Apply initial lock state
-
-    const passwordInput = document.getElementById('password-input');
-    const unlockButton = document.getElementById('unlock-button');
-    const lockButton = document.getElementById('lock-button');
-    const editStatus = document.getElementById('edit-status');
-    const editableFields = document.querySelectorAll('.editable-field');
-    const summaryContent = document.getElementById('summary-content');
-
-    // Store initial content for all editable fields
-    editableFields.forEach(field => {
-        initialContentMap.set(field.id, field.textContent);
-    });
-
-    // --- Core Logic for Editable Fields ---
-    function setEditableState(canEdit) {
-        isEditingEnabled = canEdit;
-        editableFields.forEach(field => {
-            // Only make 'score-input' fields contenteditable
-            if (field.classList.contains('score-input') || field.id === 'summary-content') {
-                field.contentEditable = canEdit;
-                field.classList.toggle('is-editable', canEdit);
+        // Message box utility
+        function showMessage(message, isError = false) {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            msgBox.className = 'message-box show'; // Reset classes
+            if (isError) {
+                msgBox.classList.add('error');
             } else {
-                // Ensure other editable fields remain locked for direct text editing unless specified
-                field.contentEditable = false;
-                field.classList.remove('is-editable');
+                msgBox.classList.remove('error');
             }
-        });
-        editStatus.textContent = isEditingEnabled ? "สถานะ: ปลดล็อกแล้ว" : "สถานะ: ล็อกอยู่";
-        passwordInput.value = ''; // Clear password input
-    }
+            setTimeout(() => {
+                msgBox.classList.remove('show');
+            }, 3000); // Hide after 3 seconds
+        }
 
-    // Function to handle saving score
-    // *** THIS IS THE KEY FUNCTION FOR SENDING DATA TO YOUR SERVER ***
-    function saveScore(fieldId, newScore) {
-        console.log(`Simulating save for ${fieldId}: ${newScore}`);
-        // In a real application, you would send this data to your backend:
-        /*
-        fetch('/api/update-score', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: fieldId,
-                score: newScore
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Save successful:', data);
-            // Optionally, refresh UI or show success message
-            // recalculateAndRenderTables(); // Recalculate if score affects standings
-        })
-        .catch(error => {
-            console.error('Error saving score:', error);
-            // Revert content if save fails, or show error message
-        });
-        */
+        // Constants and state variables
+        const CORRECT_PASSWORD = "admin"; // Password for unlocking editing
+        let isEditingEnabled = false; // Editing status
 
-        // For this demo, we'll just update the map and recalculate standings
-        initialContentMap.set(fieldId, newScore); // Update the "saved" content in our map
-        recalculateAndRenderTables();
-        alert(`บันทึกผลการแข่งขันสำหรับ ${fieldId} เป็น: ${newScore} (นี่คือการจำลองการบันทึก)`);
-    }
+        // Configuration for Round 1 matches (teams, groups, etc.)
+        const round1MatchesData = [
+            { id: "score-R1M1", team1: "สร้างคอม", team2: "หนองหาน", group: "A", date: "16 มิ.ย. 68", time: "14:00 น.", matchNum: 1, round: "แรก" },
+            { id: "score-R1M2", team1: "โนนสะอาด", team2: "บ้านผือ", group: "A", date: "16 มิ.ย. 68", time: "15:00 น.", matchNum: 2, round: "แรก" },
+            { id: "score-R1M3", team1: "ทุ่งฝน", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B", date: "16 มิ.ย. 68", time: "16:00 น.", matchNum: 3, round: "แรก" },
+            { id: "score-R1M4", team1: "ประจักษ์", team2: "วังสามหมอ", group: "B", date: "18 มิ.ย. 68", time: "14:00 น.", matchNum: 4, round: "แรก" },
+            { id: "score-R1M5", team1: "ทุ่งฝน", team2: "บ้านเทื่อม", group: "B", date: "18 มิ.ย. 68", time: "15:00 น.", matchNum: 5, round: "แรก" },
+            { id: "score-R1M6", team1: "สร้างคอม", team2: "สภ.เมืองฯ (008)", group: "A", date: "18 มิ.ย. 68", time: "16:00 น.", matchNum: 6, round: "แรก" },
+            { id: "score-R1M7", team1: "โนนสะอาด", team2: "สภ.เมืองฯ (008)", group: "A", date: "20 มิ.ย. 68", time: "14:00 น.", matchNum: 7, round: "แรก" },
+            { id: "score-R1M8", team1: "หนองหาน", team2: "บ้านผือ", group: "A", date: "20 มิ.ย. 68", time: "15:00 น.", matchNum: 8, round: "แรก" },
+            { id: "score-R1M9", team1: "วังสามหมอ", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B", date: "20 มิ.ย. 68", time: "16:00 น.", matchNum: 9, round: "แรก" },
+            { id: "score-R1M10", team1: "ทุ่งฝน", team2: "วังสามหมอ", group: "B", date: "23 มิ.ย. 68", time: "14:00 น.", matchNum: 10, round: "แรก" },
+            { id: "score-R1M11", team1: "ประจักษ์", team2: "บ้านเทื่อม", group: "B", date: "23 มิ.ย. 68", time: "15:00 น.", matchNum: 11, round: "แรก" },
+            { id: "score-R1M12", team1: "สร้างคอม", team2: "บ้านผือ", group: "A", date: "23 มิ.ย. 68", time: "16:00 น.", matchNum: 12, round: "แรก" },
+            { id: "score-R1M13", team1: "หนองหาน", team2: "โนนสะอาด", group: "A", date: "25 มิ.ย. 68", time: "14:00 น.", matchNum: 13, round: "แรก" },
+            { id: "score-R1M14", team1: "บ้านผือ", team2: "สภ.เมืองฯ (008)", group: "A", date: "25 มิ.ย. 68", time: "15:00 น.", matchNum: 14, round: "แรก" },
+            { id: "score-R1M15", team1: "ประจักษ์", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B", date: "25 มิ.ย. 68", time: "16:00 น.", matchNum: 15, round: "แรก" },
+            { id: "score-R1M16", team1: "ทุ่งฝน", team2: "ประจักษ์", group: "B", date: "27 มิ.ย. 68", time: "14:00 น.", matchNum: 16, round: "แรก" },
+            { id: "score-R1M17", team1: "วังสามหมอ", team2: "บ้านเทื่อม", group: "B", date: "27 มิ.ย. 68", time: "15:00 น.", matchNum: 17, round: "แรก" },
+            { id: "score-R1M18", team1: "สร้างคอม", team2: "โนนสะอาด", group: "A", date: "27 มิ.ย. 68", time: "16:00 น.", matchNum: 18, round: "แรก" },
+            { id: "score-R1M19", team1: "หนองหาน", team2: "สภ.เมืองฯ (008)", group: "A", date: "30 มิ.ย. 68", time: "15:00 น.", matchNum: 19, round: "แรก" },
+            { id: "score-R1M20", team1: "บ้านเทื่อม", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B", date: "30 มิ.ย. 68", time: "16:00 น.", matchNum: 20, round: "แรก" },
+        ];
 
-    // Function to handle changes in editable fields
-    function handleEditableChange(event) {
-        if (!isEditingEnabled) return;
+        // Configuration for Semi-Final and Final matches (teams will be dynamic)
+        const knockoutMatchesData = [
+            { id: "score-SFM21", teamsId: "teams-SFM21", date: "2 ก.ค. 68", time: "15:00 น.", matchNum: 21, round: "รอบรอง" },
+            { id: "score-SFM22", teamsId: "teams-SFM22", date: "2 ก.ค. 68", time: "16:00 น.", matchNum: 22, round: "รอบรอง" },
+            { id: "score-FFM23", teamsId: "teams-FFM23", date: "4 ก.ค. 68", time: "15:00 น.", matchNum: 23, round: "ชิงที่ 3" },
+            { id: "score-FFM24", teamsId: "teams-FFM24", date: "4 ก.ค. 68", time: "16:00 น.", matchNum: 24, round: "ชิงชนะเลิศ" },
+        ];
 
-        const field = event.target;
-        const fieldId = field.id;
-        const newContent = field.textContent.trim();
-        const oldContent = initialContentMap.get(fieldId);
+        // Global store for team statistics
+        const teamStats = {};
 
-        // Check if content has actually changed
-        if (newContent !== oldContent) {
-            // If it's a score input, validate format (e.g., "X-Y")
-            if (field.classList.contains('score-input')) {
-                const scoreRegex = /^\d+-\d+$/; // Matches "number-number"
-                if (newContent && !scoreRegex.test(newContent)) {
-                    alert('กรุณากรอกผลการแข่งขันในรูปแบบ H-A (เช่น 2-1)');
-                    field.textContent = oldContent || ''; // Revert to old content or clear if no old content
-                    return;
+        // Map to store current content of editable fields for change detection
+        const currentFieldContent = new Map();
+
+        // --- Firebase Initialization and Authentication ---
+        async function initializeFirebase() {
+            if (!Object.keys(firebaseConfig).length) {
+                showMessage("Firebase config is missing. Data persistence will not work.", true);
+                return;
+            }
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                await new Promise(resolve => {
+                    onAuthStateChanged(auth, async (user) => {
+                        if (user) {
+                            userId = user.uid;
+                            console.log("Firebase Authenticated:", userId);
+                        } else {
+                            // Sign in anonymously if no token provided
+                            const __initial_auth_token = typeof window.__initial_auth_token !== 'undefined' ? window.__initial_auth_token : undefined;
+                            if (__initial_auth_token) {
+                                try {
+                                    await signInWithCustomToken(auth, __initial_auth_token);
+                                    userId = auth.currentUser.uid;
+                                    console.log("Signed in with custom token:", userId);
+                                } catch (error) {
+                                    console.error("Error signing in with custom token:", error);
+                                    await signInAnonymously(auth);
+                                    userId = auth.currentUser.uid;
+                                    showMessage("Error with custom auth token, signed in anonymously. Data might not persist for multiple users.", true);
+                                }
+                            } else {
+                                await signInAnonymously(auth);
+                                userId = auth.currentUser.uid;
+                                console.log("Signed in anonymously:", userId);
+                            }
+                        }
+                        resolve();
+                    });
+                });
+
+                // Start listening for real-time updates after auth is ready
+                setupFirestoreListeners();
+            } catch (e) {
+                console.error("Error initializing Firebase:", e);
+                showMessage("Failed to initialize Firebase. Data will not persist.", true);
+            }
+        }
+
+        // --- Firestore Data Operations ---
+
+        // Get document reference for scores
+        function getScoreDocRef(matchId) {
+            // Using a public collection path for shared data
+            return doc(db, `artifacts/${appId}/public/data/footballScores`, matchId);
+        }
+
+        // Get document reference for summary content
+        function getSummaryDocRef() {
+            // Using a public collection path for shared data
+            return doc(db, `artifacts/${appId}/public/data/appSettings`, 'udonPoliceCup2025Summary');
+        }
+
+        // Save data to Firestore
+        async function saveDataToFirestore(docRef, data, message) {
+            if (!db) {
+                showMessage("Database not initialized. Cannot save data.", true);
+                return;
+            }
+            try {
+                await setDoc(docRef, data, { merge: true }); // Use merge to update specific fields
+                showMessage(message);
+            } catch (e) {
+                console.error("Error saving data:", e);
+                showMessage(`Error saving data: ${e.message}`, true);
+            }
+        }
+
+        // Setup real-time listeners for data
+        function setupFirestoreListeners() {
+            if (!db) return;
+
+            // Listen for changes in Round 1 scores
+            round1MatchesData.forEach(match => {
+                const scoreDocRef = getScoreDocRef(match.id);
+                onSnapshot(scoreDocRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        const scoreElement = document.getElementById(match.id);
+                        if (scoreElement && scoreElement.textContent !== data.score) { // Avoid unnecessary DOM updates
+                            scoreElement.textContent = data.score || '';
+                            currentFieldContent.set(match.id, data.score || '');
+                            recalculateAndRenderTables();
+                        }
+                    } else {
+                        // If document doesn't exist, ensure UI is clear or default
+                        const scoreElement = document.getElementById(match.id);
+                        if (scoreElement) {
+                            scoreElement.textContent = '';
+                            currentFieldContent.set(match.id, '');
+                        }
+                    }
+                }, (error) => {
+                    console.error(`Error listening to ${match.id}:`, error);
+                    showMessage(`Error loading scores for ${match.id}`, true);
+                });
+            });
+
+            // Listen for changes in Knockout scores
+            knockoutMatchesData.forEach(match => {
+                const scoreDocRef = getScoreDocRef(match.id);
+                onSnapshot(scoreDocRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        const scoreElement = document.getElementById(match.id);
+                        if (scoreElement && scoreElement.textContent !== data.score) {
+                            scoreElement.textContent = data.score || '';
+                            currentFieldContent.set(match.id, data.score || '');
+                            recalculateAndRenderTables();
+                        }
+                    } else {
+                        const scoreElement = document.getElementById(match.id);
+                        if (scoreElement) {
+                            scoreElement.textContent = '';
+                            currentFieldContent.set(match.id, '');
+                        }
+                    }
+                }, (error) => {
+                    console.error(`Error listening to ${match.id}:`, error);
+                    showMessage(`Error loading knockout scores for ${match.id}`, true);
+                });
+            });
+
+            // Listen for changes in summary content
+            const summaryDocRef = getSummaryDocRef();
+            onSnapshot(summaryDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    const summaryElement = document.getElementById('summary-content');
+                    if (summaryElement && summaryElement.innerHTML !== data.content) { // Use innerHTML for rich text
+                        summaryElement.innerHTML = data.content || '<p>(กรุณากรอกสรุปผลการแข่งขันและทีมที่ชนะในแต่ละรอบที่นี่)</p>';
+                        currentFieldContent.set('summary-content', summaryElement.innerHTML);
+                    }
+                } else {
+                    const summaryElement = document.getElementById('summary-content');
+                    if (summaryElement) {
+                        summaryElement.innerHTML = '<p>(กรุณากรอกสรุปผลการแข่งขันและทีมที่ชนะในแต่ละรอบที่นี่)</p>';
+                        currentFieldContent.set('summary-content', summaryElement.innerHTML);
+                    }
                 }
-                saveScore(fieldId, newContent); // Call save function for scores
-            } else if (field.id === 'summary-content') {
-                saveSummaryContent(newContent); // Call a specific function for summary
+            }, (error) => {
+                console.error("Error listening to summary content:", error);
+                showMessage("Error loading summary content", true);
+            });
+        }
+
+        // --- Team Statistics and Table Rendering ---
+
+        // Function to initialize team stats
+        function initializeTeamStats() {
+            // Clear previous stats
+            for (const teamName in teamStats) {
+                delete teamStats[teamName];
+            }
+
+            // Populate teamStats with all unique teams from round1MatchesData
+            round1MatchesData.forEach(match => {
+                if (!teamStats[match.team1]) {
+                    teamStats[match.team1] = {
+                        name: match.team1,
+                        played: 0, wins: 0, draws: 0, losses: 0,
+                        goalsFor: 0, goalsAgainst: 0, goalDiff: 0,
+                        points: 0, group: match.group
+                    };
+                }
+                if (!teamStats[match.team2]) {
+                    teamStats[match.team2] = {
+                        name: match.team2,
+                        played: 0, wins: 0, draws: 0, losses: 0,
+                        goalsFor: 0, goalsAgainst: 0, goalDiff: 0,
+                        points: 0, group: match.group
+                    };
+                }
+            });
+        }
+
+        // Function to update team stats based on a match result
+        function updateTeamStats(team1Name, score1, team2Name, score2) {
+            // Ensure teams exist in stats, if not, initialize them (should be covered by initializeTeamStats)
+            if (!teamStats[team1Name]) {
+                teamStats[team1Name] = { name: team1Name, played: 0, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, goalDiff: 0, points: 0, group: '' };
+            }
+            if (!teamStats[team2Name]) {
+                teamStats[team2Name] = { name: team2Name, played: 0, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, goalDiff: 0, points: 0, group: '' };
+            }
+
+            teamStats[team1Name].played++;
+            teamStats[team2Name].played++;
+
+            teamStats[team1Name].goalsFor += score1;
+            teamStats[team1Name].goalsAgainst += score2;
+            teamStats[team1Name].goalDiff = teamStats[team1Name].goalsFor - teamStats[team1Name].goalsAgainst;
+
+            teamStats[team2Name].goalsFor += score2;
+            teamStats[team2Name].goalsAgainst += score1;
+            teamStats[team2Name].goalDiff = teamStats[team2Name].goalsFor - teamStats[team2Name].goalsAgainst;
+
+            if (score1 > score2) {
+                teamStats[team1Name].wins++;
+                teamStats[team1Name].points += 3;
+                teamStats[team2Name].losses++;
+            } else if (score2 > score1) {
+                teamStats[team2Name].wins++;
+                teamStats[team2Name].points += 3;
+                teamStats[team1Name].losses++;
+            } else {
+                teamStats[team1Name].draws++;
+                teamStats[team1Name].points += 1;
+                teamStats[team2Name].draws++;
+                teamStats[team2Name].points += 1;
             }
         }
-    }
 
-    // Function to "save" summary content (currently just logging)
-    function saveSummaryContent(newContent) {
-        console.log("บันทึกสรุปผลการแข่งขัน:", newContent);
-        alert("บันทึกสรุปผลการแข่งขันแล้ว (นี่คือการจำลองการบันทึก)");
-    }
+        // Function to render summary table
+        function renderSummaryTable(groupId, tbodyId) {
+            const tbody = document.getElementById(tbodyId);
+            tbody.innerHTML = ''; // Clear existing rows
 
-    // Attach event listeners to all editable score fields
-    document.querySelectorAll('.score-input, #summary-content').forEach(field => {
-        field.addEventListener('blur', handleEditableChange); // When focus leaves the field
-        field.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Prevent new line on Enter
-                field.blur(); // Trigger blur to save changes
-            }
-        });
-    });
+            let teamsInGroup = Object.values(teamStats).filter(team => team.group === groupId);
 
-    // --- Password Control Event Listeners ---
-    unlockButton.addEventListener('click', () => {
-        if (passwordInput.value === CORRECT_PASSWORD) {
-            setEditableState(true);
-        } else {
-            alert('รหัสผ่านไม่ถูกต้อง!');
-            passwordInput.value = '';
+            // Sort teams by points, then goal difference, then goals for
+            teamsInGroup.sort((a, b) => {
+                if (b.points !== a.points) return b.points - a.points;
+                if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
+                return b.goalsFor - a.goalsFor;
+            });
+
+            teamsInGroup.forEach(team => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td class="py-3 px-4 whitespace-nowrap">${team.name}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">${team.played}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">${team.wins}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">${team.draws}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">${team.losses}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">${team.goalsFor}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">${team.goalsAgainst}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">${team.goalDiff}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">${team.points}</td>
+                `;
+            });
         }
-    });
 
-    lockButton.addEventListener('click', () => {
-        setEditableState(false);
-    });
+        // Function to control editable state of fields
+        function setEditableState(canEdit) {
+            isEditingEnabled = canEdit;
+            const editableFields = document.querySelectorAll('.editable-field');
+            editableFields.forEach(field => {
+                // Only allow score inputs and the summary div to be contenteditable
+                if (field.classList.contains('score-input') || field.id === 'summary-content') {
+                    field.contentEditable = canEdit;
+                    field.classList.toggle('is-editable', canEdit);
+                } else {
+                    // For fields like 'teams-SFM21', keep them non-editable by user directly
+                    field.contentEditable = false;
+                    field.classList.remove('is-editable');
+                }
+            });
+            document.getElementById('edit-status').textContent = isEditingEnabled ? "สถานะ: ปลดล็อกแล้ว" : "สถานะ: ล็อกอยู่";
+            document.getElementById('password-input').value = ''; // Clear password input
+        }
 
-    // Initial state: locked
-    setEditableState(false);
+        // Function to handle saving scores
+        async function handleScoreSave(fieldId, newScore) {
+            if (!db) {
+                showMessage("Database not initialized. Cannot save score.", true);
+                return;
+            }
+            const docRef = getScoreDocRef(fieldId);
+            const scoreData = { score: newScore };
+            if (fieldId.startsWith("score-R1M")) {
+                const matchInfo = round1MatchesData.find(m => m.id === fieldId);
+                Object.assign(scoreData, {
+                    team1: matchInfo.team1,
+                    team2: matchInfo.team2,
+                    group: matchInfo.group,
+                    date: matchInfo.date,
+                    time: matchInfo.time,
+                    matchNum: matchInfo.matchNum,
+                    round: matchInfo.round
+                });
+            } else if (fieldId.startsWith("score-SFM") || fieldId.startsWith("score-FFM")) {
+                 // For knockout stages, capture current team names from the DOM
+                 const teamsElement = document.getElementById(fieldId.replace('score-', 'teams-'));
+                 if (teamsElement) {
+                     const teamsText = teamsElement.textContent;
+                     const [team1, team2] = teamsText.split(' vs ').map(s => s.trim());
+                     Object.assign(scoreData, {
+                        team1: team1,
+                        team2: team2
+                     });
+                 }
+                const matchInfo = knockoutMatchesData.find(m => m.id === fieldId);
+                Object.assign(scoreData, {
+                    date: matchInfo.date,
+                    time: matchInfo.time,
+                    matchNum: matchInfo.matchNum,
+                    round: matchInfo.round
+                });
+            }
 
-    // Function to read scores and recalculate all stats
-    function recalculateAndRenderTables() {
-        // Reset team stats
-        initializeTeamStats();
+            await saveDataToFirestore(docRef, scoreData, `บันทึกผลการแข่งขันสำหรับ ${fieldId} แล้ว`);
+        }
 
-        // Process Round 1 matches
-        round1Matches.forEach(match => {
-            const scoreElement = document.getElementById(match.id);
-            if (scoreElement) {
-                const scoreText = scoreElement.textContent.trim();
-                const scores = scoreText.split('-').map(s => parseInt(s, 10));
+        // Function to handle saving summary content
+        async function handleSummarySave(newContent) {
+            if (!db) {
+                showMessage("Database not initialized. Cannot save summary.", true);
+                return;
+            }
+            const docRef = getSummaryDocRef();
+            await saveDataToFirestore(docRef, { content: newContent }, "บันทึกสรุปผลการแข่งขันแล้ว");
+        }
 
-                if (scores.length === 2 && !isNaN(scores[0]) && !isNaN(scores[1])) {
-                    // Update team names in teamStats if they don't have 'name' property
-                    if (!teamStats[match.team1].name) teamStats[match.team1].name = match.team1;
-                    if (!teamStats[match.team2].name) teamStats[match.team2].name = match.team2;
+        // Function to handle changes in contenteditable fields
+        function handleEditableChange(event) {
+            if (!isEditingEnabled) return;
 
-                    updateTeamStats(match.team1, scores[0], match.team2, scores[1]);
+            const field = event.target;
+            const fieldId = field.id;
+            const newContent = field.textContent.trim();
+            const oldContent = currentFieldContent.get(fieldId) || ''; // Get current content from map
+
+            // Check if content has actually changed
+            if (newContent !== oldContent) {
+                // If it's a score input, validate format (e.g., "X-Y")
+                if (field.classList.contains('score-input')) {
+                    const scoreRegex = /^\d+-\d+$/; // Matches "number-number"
+                    if (newContent && !scoreRegex.test(newContent)) {
+                        showMessage('กรุณากรอกผลการแข่งขันในรูปแบบ H-A (เช่น 2-1)', true);
+                        field.textContent = oldContent; // Revert to old content
+                        return;
+                    }
+                    handleScoreSave(fieldId, newContent);
+                } else if (field.id === 'summary-content') {
+                    // For summary content, we save innerHTML to preserve formatting
+                    handleSummarySave(field.innerHTML);
                 }
             }
-        });
-
-        // Render summary tables
-        renderSummaryTable("A", "summary-A-tbody");
-        renderSummaryTable("B", "summary-B-tbody");
-
-        // Optional: Update knockout stage team names if group stage is complete
-        updateKnockoutStageTeams();
-    }
-
-    // Function to update knockout stage team names
-    function updateKnockoutStageTeams() {
-        let teamsInGroupA = Object.values(teamStats).filter(team => team.group === "A");
-        let teamsInGroupB = Object.values(teamStats).filter(team => team.group === "B");
-
-        teamsInGroupA.sort((a, b) => {
-            if (b.points !== a.points) return b.points - a.points;
-            if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
-            return b.goalsFor - a.goalsFor;
-        });
-
-        teamsInGroupB.sort((a, b) => {
-            if (b.points !== a.points) return b.points - a.points;
-            if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
-            return b.goalsFor - a.goalsFor;
-        });
-
-        const winnerA = teamsInGroupA[0] ? teamsInGroupA[0].name : "ทีมชนะสาย A";
-        const runnerUpA = teamsInGroupA[1] ? teamsInGroupA[1].name : "ทีมรองชนะเลิศสาย A";
-        const winnerB = teamsInGroupB[0] ? teamsInGroupB[0].name : "ทีมชนะสาย B";
-        const runnerUpB = teamsInGroupB[1] ? teamsInGroupB[1].name : "ทีมรองชนะเลิศสาย B";
-
-        document.getElementById('teams-SFM21').textContent = `${winnerA} vs ${runnerUpB}`;
-        document.getElementById('teams-SFM22').textContent = `${winnerB} vs ${runnerUpA}`;
-
-        // Update Final Matchup after semi-finals are played (this would require more logic)
-        // For now, these will remain static placeholders unless scores are entered
-        const scoreSFM21 = document.getElementById('score-SFM21').textContent.trim();
-        const scoreSFM22 = document.getElementById('score-SFM22').textContent.trim();
-
-        let winnerSF21 = "ชนะ คู่ 21";
-        let loserSF21 = "แพ้ คู่ 21";
-        if (scoreSFM21.match(/^\d+-\d+$/)) {
-            const [s1, s2] = scoreSFM21.split('-').map(Number);
-            const teams = document.getElementById('teams-SFM21').textContent.split(' vs ');
-            if (s1 > s2) { winnerSF21 = teams[0]; loserSF21 = teams[1]; }
-            else if (s2 > s1) { winnerSF21 = teams[1]; loserSF21 = teams[0]; }
         }
 
-        let winnerSF22 = "ชนะ คู่ 22";
-        let loserSF22 = "แพ้ คู่ 22";
-        if (scoreSFM22.match(/^\d+-\d+$/)) {
-            const [s1, s2] = scoreSFM22.split('-').map(Number);
-            const teams = document.getElementById('teams-SFM22').textContent.split(' vs ');
-            if (s1 > s2) { winnerSF22 = teams[0]; loserSF22 = teams[1]; }
-            else if (s2 > s1) { winnerSF22 = teams[1]; loserSF22 = teams[0]; }
+        // Function to read scores from DOM and recalculate all stats
+        function recalculateAndRenderTables() {
+            initializeTeamStats(); // Reset team stats
+
+            // Process Round 1 matches
+            round1MatchesData.forEach(match => {
+                const scoreElement = document.getElementById(match.id);
+                if (scoreElement) {
+                    const scoreText = scoreElement.textContent.trim();
+                    const scores = scoreText.split('-').map(s => parseInt(s, 10));
+
+                    if (scores.length === 2 && !isNaN(scores[0]) && !isNaN(scores[1])) {
+                        updateTeamStats(match.team1, scores[0], match.team2, scores[1]);
+                    }
+                }
+            });
+
+            // Render summary tables
+            renderSummaryTable("A", "summary-A-tbody");
+            renderSummaryTable("B", "summary-B-tbody");
+
+            // Update knockout stage team names
+            updateKnockoutStageTeams();
         }
 
-        document.getElementById('teams-FFM23').textContent = `${loserSF21} vs ${loserSF22}`;
-        document.getElementById('teams-FFM24').textContent = `${winnerSF21} vs ${winnerSF22}`;
-    }
+        // Function to update knockout stage team names
+        function updateKnockoutStageTeams() {
+            let teamsInGroupA = Object.values(teamStats).filter(team => team.group === "A");
+            let teamsInGroupB = Object.values(teamStats).filter(team => team.group === "B");
 
-    // Initial calculation and rendering on page load
-    recalculateAndRenderTables();
-});
+            teamsInGroupA.sort((a, b) => {
+                if (b.points !== a.points) return b.points - a.points;
+                if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
+                return b.goalsFor - a.goalsFor;
+            });
 
-// Function to control editable state of fields
-function updateEditableFields() {
-    const editableFields = document.querySelectorAll('.editable-field');
-    editableFields.forEach(field => {
-        // Only allow score inputs and the summary div to be contenteditable
-        if (field.classList.contains('score-input') || field.id === 'summary-content') {
-            field.contentEditable = isEditingEnabled;
-            field.classList.toggle('is-editable', isEditingEnabled);
-        } else {
-            // For fields like 'teams-SFM21', keep them non-editable by user directly
-            field.contentEditable = false;
-            field.classList.remove('is-editable');
+            teamsInGroupB.sort((a, b) => {
+                if (b.points !== a.points) return b.points - a.points;
+                if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
+                return b.goalsFor - a.goalsFor;
+            });
+
+            const winnerA = teamsInGroupA[0] ? teamsInGroupA[0].name : "ทีมชนะสาย A";
+            const runnerUpA = teamsInGroupA[1] ? teamsInGroupA[1].name : "ทีมรองชนะเลิศสาย A";
+            const winnerB = teamsInGroupB[0] ? teamsInGroupB[0].name : "ทีมชนะสาย B";
+            const runnerUpB = teamsInGroupB[1] ? teamsInGroupB[1].name : "ทีมรองชนะเลิศสาย B";
+
+            document.getElementById('teams-SFM21').textContent = `${winnerA} vs ${runnerUpB}`;
+            document.getElementById('teams-SFM22').textContent = `${winnerB} vs ${runnerUpA}`;
+
+            // Determine winners/losers of semi-finals to populate final stage
+            let winnerSF21 = "ชนะ คู่ 21";
+            let loserSF21 = "แพ้ คู่ 21";
+            const scoreSFM21Element = document.getElementById('score-SFM21');
+            const scoreSFM21Text = scoreSFM21Element ? scoreSFM21Element.textContent.trim() : '';
+            if (scoreSFM21Text.match(/^\d+-\d+$/)) {
+                const [s1, s2] = scoreSFM21Text.split('-').map(Number);
+                const teams = document.getElementById('teams-SFM21').textContent.split(' vs ').map(s => s.trim());
+                if (s1 > s2) { winnerSF21 = teams[0]; loserSF21 = teams[1]; }
+                else if (s2 > s1) { winnerSF21 = teams[1]; loserSF21 = teams[0]; }
+            }
+
+            let winnerSF22 = "ชนะ คู่ 22";
+            let loserSF22 = "แพ้ คู่ 22";
+            const scoreSFM22Element = document.getElementById('score-SFM22');
+            const scoreSFM22Text = scoreSFM22Element ? scoreSFM22Element.textContent.trim() : '';
+            if (scoreSFM22Text.match(/^\d+-\d+$/)) {
+                const [s1, s2] = scoreSFM22Text.split('-').map(Number);
+                const teams = document.getElementById('teams-SFM22').textContent.split(' vs ').map(s => s.trim());
+                if (s1 > s2) { winnerSF22 = teams[0]; loserSF22 = teams[1]; }
+                else if (s2 > s1) { winnerSF22 = teams[1]; loserSF22 = teams[0]; }
+            }
+
+            document.getElementById('teams-FFM23').textContent = `${loserSF21} vs ${loserSF22}`;
+            document.getElementById('teams-FFM24').textContent = `${winnerSF21} vs ${winnerSF22}`;
         }
-    });
-}
+
+
+        // --- Event Listeners and Initial Setup ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initializeFirebase(); // Initialize Firebase and sign in
+            setEditableState(false); // Set initial state to locked
+
+            const passwordInput = document.getElementById('password-input');
+            const unlockButton = document.getElementById('unlock-button');
+            const lockButton = document.getElementById('lock-button');
+
+            // Attach event listeners to all editable score fields and summary content
+            document.querySelectorAll('.score-input, #summary-content').forEach(field => {
+                field.addEventListener('blur', handleEditableChange); // When focus leaves the field
+                field.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') {
+                        event.preventDefault(); // Prevent new line on Enter
+                        field.blur(); // Trigger blur to save changes
+                    }
+                });
+            });
+
+            // Password control event listeners
+            unlockButton.addEventListener('click', () => {
+                if (passwordInput.value === CORRECT_PASSWORD) {
+                    setEditableState(true);
+                    showMessage("ปลดล็อกการแก้ไขแล้ว");
+                } else {
+                    showMessage('รหัสผ่านไม่ถูกต้อง!', true);
+                    passwordInput.value = '';
+                }
+            });
+
+            lockButton.addEventListener('click', () => {
+                setEditableState(false);
+                showMessage("ล็อกการแก้ไขแล้ว");
+            });
+
+            // Ensure tables are rendered initially, even if no scores are present yet.
+            recalculateAndRenderTables();
+        });
+
     </script>
 </body>
 </html>
