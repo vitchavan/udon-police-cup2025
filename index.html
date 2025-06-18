@@ -473,294 +473,359 @@
     </div>
 
     <script>
-        const CORRECT_PASSWORD = "admin"; // รหัสผ่านสำหรับปลดล็อกการแก้ไข คุณสามารถเปลี่ยนเป็นรหัสผ่านที่คุณต้องการได้
-        let isEditingEnabled = false; // สถานะการแก้ไข
+      const CORRECT_PASSWORD = "admin"; // รหัสผ่านสำหรับปลดล็อกการแก้ไข คุณสามารถเปลี่ยนเป็นรหัสผ่านที่คุณต้องการได้
+let isEditingEnabled = false; // สถานะการแก้ไข
 
-        // Configuration for Round 1 matches (teams, groups)
-        const round1Matches = [
-            { id: "score-R1M1", team1: "สร้างคอม", team2: "หนองหาน", group: "A" },
-            { id: "score-R1M2", team1: "โนนสะอาด", team2: "บ้านผือ", group: "A" },
-            { id: "score-R1M3", team1: "ทุ่งฝน", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
-            { id: "score-R1M4", team1: "ประจักษ์", team2: "วังสามหมอ", group: "B" },
-            { id: "score-R1M5", team1: "ทุ่งฝน", team2: "บ้านเทื่อม", group: "B" },
-            { id: "score-R1M6", team1: "สร้างคอม", team2: "สภ.เมืองฯ (008)", group: "A" },
-            { id: "score-R1M7", team1: "โนนสะอาด", team2: "สภ.เมืองฯ (008)", group: "A" },
-            { id: "score-R1M8", team1: "หนองหาน", team2: "บ้านผือ", group: "A" },
-            { id: "score-R1M9", team1: "วังสามหมอ", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
-            { id: "score-R1M10", team1: "ทุ่งฝน", team2: "วังสามหมอ", group: "B" },
-            { id: "score-R1M11", team1: "ประจักษ์", team2: "บ้านเทื่อม", group: "B" },
-            { id: "score-R1M12", team1: "สร้างคอม", team2: "บ้านผือ", group: "A" },
-            { id: "score-R1M13", team1: "หนองหาน", team2: "โนนสะอาด", group: "A" },
-            { id: "score-R1M14", team1: "บ้านผือ", team2: "สภ.เมืองฯ (008)", group: "A" },
-            { id: "score-R1M15", team1: "ประจักษ์", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
-            { id: "score-R1M16", team1: "ทุ่งฝน", team2: "ประจักษ์", group: "B" },
-            { id: "score-R1M17", team1: "วังสามหมอ", team2: "บ้านเทื่อม", group: "B" },
-            { id: "score-R1M18", team1: "สร้างคอม", team2: "โนนสะอาด", group: "A" },
-            { id: "score-R1M19", team1: "หนองหาน", team2: "สภ.เมืองฯ (008)", group: "A" },
-            { id: "score-R1M20", team1: "บ้านเทื่อม", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
-        ];
+// Configuration for Round 1 matches (teams, groups)
+const round1Matches = [
+    { id: "score-R1M1", team1: "สร้างคอม", team2: "หนองหาน", group: "A" },
+    { id: "score-R1M2", team1: "โนนสะอาด", team2: "บ้านผือ", group: "A" },
+    { id: "score-R1M3", team1: "ทุ่งฝน", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
+    { id: "score-R1M4", team1: "ประจักษ์", team2: "วังสามหมอ", group: "B" },
+    { id: "score-R1M5", team1: "ทุ่งฝน", team2: "บ้านเทื่อม", group: "B" },
+    { id: "score-R1M6", team1: "สร้างคอม", team2: "สภ.เมืองฯ (008)", group: "A" },
+    { id: "score-R1M7", team1: "โนนสะอาด", team2: "สภ.เมืองฯ (008)", group: "A" },
+    { id: "score-R1M8", team1: "หนองหาน", team2: "บ้านผือ", group: "A" },
+    { id: "score-R1M9", team1: "วังสามหมอ", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
+    { id: "score-R1M10", team1: "ทุ่งฝน", team2: "วังสามหมอ", group: "B" },
+    { id: "score-R1M11", team1: "ประจักษ์", team2: "บ้านเทื่อม", group: "B" },
+    { id: "score-R1M12", team1: "สร้างคอม", team2: "บ้านผือ", group: "A" },
+    { id: "score-R1M13", team1: "หนองหาน", team2: "โนนสะอาด", group: "A" },
+    { id: "score-R1M14", team1: "บ้านผือ", team2: "สภ.เมืองฯ (008)", group: "A" },
+    { id: "score-R1M15", team1: "ประจักษ์", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
+    { id: "score-R1M16", team1: "ทุ่งฝน", team2: "ประจักษ์", group: "B" },
+    { id: "score-R1M17", team1: "วังสามหมอ", team2: "บ้านเทื่อม", group: "B" },
+    { id: "score-R1M18", team1: "สร้างคอม", team2: "โนนสะอาด", group: "A" },
+    { id: "score-R1M19", team1: "หนองหาน", team2: "สภ.เมืองฯ (008)", group: "A" },
+    { id: "score-R1M20", team1: "บ้านเทื่อม", team2: "ฝอ.ภ.จว.อุดรธานี", group: "B" },
+];
 
-        // Initial team configuration for summary tables (used for names and initial zero stats)
-        const initialTeamConfig = {
-            A: {
-                'สร้างคอม': { name: 'สร้างคอม', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'A-saangkom-name' },
-                'หนองหาน': { name: 'หนองหาน', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'A-nonghan-name' },
-                'โนนสะอาด': { name: 'โนนสะอาด', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'A-nonsaad-name' },
-                'บ้านผือ': { name: 'บ้านผือ', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'A-banphue-name' },
-                'สภ.เมืองฯ (008)': { name: 'สภ.เมืองฯ (008)', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'A-saphmuang-name' },
-            },
-            B: {
-                'ทุ่งฝน': { name: 'ทุ่งฝน', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'B-tungfon-name' },
-                'ประจักษ์': { name: 'ประจักษ์', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'B-prajak-name' },
-                'วังสามหมอ': { name: 'วังสามหมอ', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'B-wangsamhor-name' },
-                'บ้านเทื่อม': { name: 'บ้านเทื่อม', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'B-banthuam-name' },
-                'ฝอ.ภ.จว.อุดรธานี': { name: 'ฝอ.ภ.จว.อุดรธานี', played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, points: 0, nameId: 'B-forporjor-name' },
-            }
+// Configuration for Semi-Final and Final matches
+const knockoutMatches = [
+    { id: "score-SFM21", teamsId: "teams-SFM21" },
+    { id: "score-SFM22", teamsId: "teams-SFM22" },
+    { id: "score-FFM23", teamsId: "teams-FFM23" },
+    { id: "score-FFM24", teamsId: "teams-FFM24" },
+];
+
+const teamStats = {}; // To store team statistics for summary tables
+
+// Function to initialize team stats
+function initializeTeamStats() {
+    const allTeams = new Set();
+    round1Matches.forEach(match => {
+        allTeams.add(match.team1);
+        allTeams.add(match.team2);
+    });
+
+    allTeams.forEach(team => {
+        teamStats[team] = {
+            played: 0,
+            wins: 0,
+            draws: 0,
+            losses: 0,
+            goalsFor: 0,
+            goalsAgainst: 0,
+            goalDiff: 0,
+            points: 0,
+            group: round1Matches.find(m => m.team1 === team || m.team2 === team)?.group || ''
         };
+    });
+}
 
-        // Function to set contenteditable status for all relevant editable fields
-        function setEditingStatus(canEdit) {
-            console.log('setEditingStatus called with:', canEdit); // Debugging log
-            document.querySelectorAll('.editable-field').forEach(field => {
-                // Only allow editing if the field is not a numeric summary stat (id does not contain specific stat keywords)
-                // or if it's the summary content block, or a team name field
-                if (field.id.startsWith('score-') || field.id.startsWith('teams-') || field.id === 'summary-content' || field.id.endsWith('-name')) {
-                    field.contentEditable = canEdit;
-                    if (canEdit) {
-                        field.classList.add('is-editable');
-                    } else {
-                        field.classList.remove('is-editable');
-                    }
-                } else {
-                    // For numeric summary fields, they should never be contenteditable
-                    field.contentEditable = false;
-                    field.classList.remove('is-editable'); // Ensure it's not styled as editable
-                }
-            });
-            isEditingEnabled = canEdit;
-            document.getElementById('edit-status').textContent = canEdit ? 'สถานะ: กำลังแก้ไข' : 'สถานะ: ล็อกอยู่';
-        }
+// Function to update team stats based on a match result
+function updateTeamStats(team1, score1, team2, score2) {
+    if (!teamStats[team1] || !teamStats[team2]) return; // Ensure teams exist in stats
 
-        // Function to parse a score string (e.g., "2-1") and return goals for/against
-        function parseScore(scoreString) {
-            const match = scoreString.match(/^(\d+)-(\d+)$/);
-            if (match) {
-                return {
-                    homeGoals: parseInt(match[1]),
-                    awayGoals: parseInt(match[2])
-                };
-            }
-            return null; // Invalid format
-        }
+    teamStats[team1].played++;
+    teamStats[team2].played++;
 
-        // Function to calculate and render group standings
-        function calculateAndRenderStandings() {
-            // Deep copy initial config to reset stats for calculation
-            const currentStandings = JSON.parse(JSON.stringify(initialTeamConfig));
+    teamStats[team1].goalsFor += score1;
+    teamStats[team1].goalsAgainst += score2;
+    teamStats[team1].goalDiff = teamStats[team1].goalsFor - teamStats[team1].goalsAgainst;
 
-            // Process Round 1 matches
-            round1Matches.forEach(match => {
-                const scoreElement = document.getElementById(match.id);
-                const scoreText = scoreElement ? scoreElement.textContent.trim() : '';
-                const parsed = parseScore(scoreText);
+    teamStats[team2].goalsFor += score2;
+    teamStats[team2].goalsAgainst += score1;
+    teamStats[team2].goalDiff = teamStats[team2].goalsFor - teamStats[team2].goalsAgainst;
 
-                if (parsed) {
-                    const { homeGoals, awayGoals } = parsed;
+    if (score1 > score2) {
+        teamStats[team1].wins++;
+        teamStats[team1].points += 3;
+        teamStats[team2].losses++;
+    } else if (score2 > score1) {
+        teamStats[team2].wins++;
+        teamStats[team2].points += 3;
+        teamStats[team1].losses++;
+    } else {
+        teamStats[team1].draws++;
+        teamStats[team1].points += 1;
+        teamStats[team2].draws++;
+        teamStats[team2].points += 1;
+    }
+}
 
-                    // Update stats for home team
-                    const homeTeam = currentStandings[match.group][match.team1];
-                    if (homeTeam) { // Ensure team exists in config
-                        homeTeam.played++;
-                        homeTeam.gf += homeGoals;
-                        homeTeam.ga += awayGoals;
-                        homeTeam.gd = homeTeam.gf - homeTeam.ga;
-                        if (homeGoals > awayGoals) {
-                            homeTeam.won++;
-                            homeTeam.points += 3;
-                        } else if (homeGoals < awayGoals) {
-                            homeTeam.lost++;
-                        } else {
-                            homeTeam.drawn++;
-                            homeTeam.points += 1;
-                        }
-                    }
+// Function to render summary table
+function renderSummaryTable(groupId, tbodyId) {
+    const tbody = document.getElementById(tbodyId);
+    tbody.innerHTML = ''; // Clear existing rows
 
-                    // Update stats for away team
-                    const awayTeam = currentStandings[match.group][match.team2];
-                    if (awayTeam) { // Ensure team exists in config
-                        awayTeam.played++;
-                        awayTeam.gf += awayGoals;
-                        awayTeam.ga += homeGoals;
-                        awayTeam.gd = awayTeam.gf - awayTeam.ga;
-                        if (awayGoals > homeGoals) {
-                            awayTeam.won++;
-                            awayTeam.points += 3;
-                        } else if (awayGoals < homeGoals) {
-                            awayTeam.lost++;
-                        } else {
-                            awayTeam.drawn++;
-                            awayTeam.points += 1;
-                        }
-                    }
-                }
-            });
+    let teamsInGroup = Object.values(teamStats).filter(team => team.group === groupId);
 
-            // Render standings for each group
-            ['A', 'B'].forEach(groupLetter => {
-                let teamsInGroup = Object.values(currentStandings[groupLetter]);
+    // Sort teams by points, then goal difference, then goals for
+    teamsInGroup.sort((a, b) => {
+        if (b.points !== a.points) return b.points - a.points;
+        if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
+        return b.goalsFor - a.goalsFor;
+    });
 
-                // Sort teams: points (desc), goal difference (desc), goals for (desc), then name (asc)
-                teamsInGroup.sort((a, b) => {
-                    if (b.points !== a.points) return b.points - a.points;
-                    if (b.gd !== a.gd) return b.gd - a.gd;
-                    if (b.gf !== a.gf) return b.gf - a.gf;
-                    // Use the name property directly from the team object
-                    const nameA = a.name;
-                    const nameB = b.name;
-                    return nameA.localeCompare(nameB);
-                });
+    teamsInGroup.forEach(team => {
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td class="py-3 px-4 whitespace-nowrap">${team.name || team.teamName}</td>
+            <td class="py-3 px-4 whitespace-nowrap">${team.played}</td>
+            <td class="py-3 px-4 whitespace-nowrap">${team.wins}</td>
+            <td class="py-3 px-4 whitespace-nowrap">${team.draws}</td>
+            <td class="py-3 px-4 whitespace-nowrap">${team.losses}</td>
+            <td class="py-3 px-4 whitespace-nowrap">${team.goalsFor}</td>
+            <td class="py-3 px-4 whitespace-nowrap">${team.goalsAgainst}</td>
+            <td class="py-3 px-4 whitespace-nowrap">${team.goalDiff}</td>
+            <td class="py-3 px-4 whitespace-nowrap">${team.points}</td>
+        `;
+    });
+}
 
-                const tbody = document.getElementById(`summary-${groupLetter}-tbody`);
-                tbody.innerHTML = ''; // Clear existing rows
+// Store initial content of editable fields for comparison
+const initialContentMap = new Map();
 
-                teamsInGroup.forEach(team => {
-                    const row = tbody.insertRow();
-                    // Load team name from localStorage or use initial config name
-                    const teamNameDisplay = localStorage.getItem(team.nameId) || team.name;
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTeamStats(); // Initialize team stats on load
+    updateEditableFields(); // Apply initial lock state
 
-                    // Team name cell (editable for admin, not stats related)
-                    const nameCell = row.insertCell();
-                    nameCell.className = 'py-3 px-4 whitespace-nowrap editable-field';
-                    nameCell.contentEditable = isEditingEnabled; // Editable based on global state
-                    nameCell.id = team.nameId;
-                    nameCell.textContent = teamNameDisplay;
+    const passwordInput = document.getElementById('password-input');
+    const unlockButton = document.getElementById('unlock-button');
+    const lockButton = document.getElementById('lock-button');
+    const editStatus = document.getElementById('edit-status');
+    const editableFields = document.querySelectorAll('.editable-field');
+    const summaryContent = document.getElementById('summary-content');
 
-                    // Numeric stats cells (not contenteditable)
-                    const playedCell = row.insertCell(); playedCell.textContent = team.played; playedCell.className = 'py-3 px-4 whitespace-nowrap text-center';
-                    const wonCell = row.insertCell(); wonCell.textContent = team.won; wonCell.className = 'py-3 px-4 whitespace-nowrap text-center';
-                    const drawnCell = row.insertCell(); drawnCell.textContent = team.drawn; drawnCell.className = 'py-3 px-4 whitespace-nowrap text-center';
-                    const lostCell = row.insertCell(); lostCell.textContent = team.lost; lostCell.className = 'py-3 px-4 whitespace-nowrap text-center';
-                    const gfCell = row.insertCell(); gfCell.textContent = team.gf; gfCell.className = 'py-3 px-4 whitespace-nowrap text-center';
-                    const gaCell = row.insertCell(); gaCell.textContent = team.ga; gaCell.className = 'py-3 px-4 whitespace-nowrap text-center';
-                    const gdCell = row.insertCell(); gdCell.textContent = team.gd; gdCell.className = 'py-3 px-4 whitespace-nowrap text-center';
-                    const pointsCell = row.insertCell(); pointsCell.textContent = team.points; pointsCell.className = 'py-3 px-4 whitespace-nowrap text-center';
-                });
+    // Store initial content for all editable fields
+    editableFields.forEach(field => {
+        initialContentMap.set(field.id, field.textContent);
+    });
 
-                // Re-add event listeners for team name cells after re-rendering
-                document.querySelectorAll(`#summary-${groupLetter}-tbody .editable-field[id$="-name"]`).forEach(nameField => {
-                    nameField.addEventListener('input', saveData);
-                });
-            });
-        }
-
-        // Function to load data from Local Storage
-        function loadData() {
-            console.log('loadData called.'); // Debugging log
-
-            // Load match scores first
-            document.querySelectorAll('.score-input').forEach(field => {
-                const fieldId = field.id;
-                const savedContent = localStorage.getItem(fieldId);
-                if (savedContent !== null) {
-                    field.textContent = savedContent;
-                } else {
-                    field.textContent = ''; // Clear default [ผล]
-                    field.setAttribute('placeholder', 'H-A (เช่น 2-1)'); // Ensure placeholder is visible
-                }
-            });
-
-            // Load semi-final/final team names and scores
-            document.querySelectorAll('.editable-field[id^="teams-"], .editable-field[id^="score-SFM"], .editable-field[id^="score-FFM"]').forEach(field => {
-                const fieldId = field.id;
-                const savedContent = localStorage.getItem(fieldId);
-                if (savedContent !== null) {
-                    field.textContent = savedContent;
-                } else {
-                    if (field.id.startsWith('score-')) {
-                        field.textContent = ''; // Clear default [ผล]
-                        field.setAttribute('placeholder', 'H-A (เช่น 2-1)');
-                    }
-                    // For team names in SF/Final, use initial hardcoded HTML content if no saved data
-                }
-            });
-
-            // Load summary content
-            const summaryContent = document.getElementById('summary-content');
-            const savedSummary = localStorage.getItem('summary-content');
-            if (savedSummary !== null) {
-                summaryContent.innerHTML = savedSummary;
+    // --- Core Logic for Editable Fields ---
+    function setEditableState(canEdit) {
+        isEditingEnabled = canEdit;
+        editableFields.forEach(field => {
+            // Only make 'score-input' fields contenteditable
+            if (field.classList.contains('score-input') || field.id === 'summary-content') {
+                field.contentEditable = canEdit;
+                field.classList.toggle('is-editable', canEdit);
             } else {
-                // If no summary content saved, ensure the placeholder text is visible
-                 summaryContent.innerHTML = `<p>(กรุณากรอกสรุปผลการแข่งขันและทีมที่ชนะในแต่ละรอบที่นี่)</p>
-                    <ul class="list-disc pl-5 text-gray-700 space-y-2 mt-4">
-                        <li>**ทีมชนะเลิศ:** [ชื่อทีมชนะเลิศ]</li>
-                        <li>**รองชนะเลิศอันดับ 1:** [ชื่อทีมรองชนะเลิศอันดับ 1]</li>
-                        <li>**รองชนะเลิศอันดับ 2 (อันดับ 3):** [ชื่อทีมรองชนะเลิศอันดับ 2]</li>
-                        <li>**ผู้ทำประตูสูงสุด:** [ชื่อนักเตะ] ([จำนวนประตู])</li>
-                        <li>**นักเตะยอดเยี่ยม:** [ชื่อนักเตะ]</li>
-                        <li>**ภาพรวมการแข่งขัน:** [เขียนสรุปภาพรวมการแข่งขันที่น่าสนใจ เหตุการณ์สำคัญ หรือบรรยากาศโดยรวม]</li>
-                    </ul>`;
+                // Ensure other editable fields remain locked for direct text editing unless specified
+                field.contentEditable = false;
+                field.classList.remove('is-editable');
             }
-
-            // After loading all individual field data, calculate and render standings
-            calculateAndRenderStandings();
-
-            // Always start locked for security
-            setEditingStatus(false);
-        }
-
-        // Function to save data to Local Storage (triggered by input event)
-        function saveData(event) {
-            const field = event.target;
-            const fieldId = field.id;
-
-            if (fieldId) {
-                if (fieldId === 'summary-content') {
-                    localStorage.setItem(fieldId, field.innerHTML);
-                } else {
-                    localStorage.setItem(fieldId, field.textContent);
-                }
-                // If a score input was changed, recalculate standings
-                if (field.classList.contains('score-input')) {
-                    calculateAndRenderStandings();
-                }
-            }
-        }
-
-        // Event listener for Unlock button
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData(); // Load existing data and set initial lock state
-
-            const passwordInput = document.getElementById('password-input');
-            const unlockButton = document.getElementById('unlock-button');
-            const lockButton = document.getElementById('lock-button');
-
-            unlockButton.addEventListener('click', () => {
-                console.log('Unlock button clicked.'); // Debugging log
-                console.log('Entered password:', passwordInput.value); // Debugging log
-                console.log('Correct password:', CORRECT_PASSWORD); // Debugging log
-
-                if (passwordInput.value === CORRECT_PASSWORD) {
-                    setEditingStatus(true);
-                    passwordInput.value = ''; // Clear password input
-                    console.log('Password correct. Editing enabled.'); // Debugging log
-                } else {
-                    document.getElementById('edit-status').textContent = 'สถานะ: ล็อกอยู่ (รหัสผ่านไม่ถูกต้อง)';
-                    passwordInput.value = ''; // Clear incorrect password
-                    console.log('Password incorrect.'); // Debugging log
-                }
-            });
-
-            lockButton.addEventListener('click', () => {
-                console.log('Lock button clicked. Editing disabled.'); // Debugging log
-                setEditingStatus(false);
-            });
-
-            // Add input listeners for all initially editable fields (scores, teams in semi/final, summary content, team names in summary tables)
-            document.querySelectorAll('.editable-field').forEach(field => {
-                field.addEventListener('input', saveData);
-            });
         });
+        editStatus.textContent = isEditingEnabled ? "สถานะ: ปลดล็อกแล้ว" : "สถานะ: ล็อกอยู่";
+        passwordInput.value = ''; // Clear password input
+    }
+
+    // Function to handle saving score
+    // *** THIS IS THE KEY FUNCTION FOR SENDING DATA TO YOUR SERVER ***
+    function saveScore(fieldId, newScore) {
+        console.log(`Simulating save for ${fieldId}: ${newScore}`);
+        // In a real application, you would send this data to your backend:
+        /*
+        fetch('/api/update-score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: fieldId,
+                score: newScore
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Save successful:', data);
+            // Optionally, refresh UI or show success message
+            // recalculateAndRenderTables(); // Recalculate if score affects standings
+        })
+        .catch(error => {
+            console.error('Error saving score:', error);
+            // Revert content if save fails, or show error message
+        });
+        */
+
+        // For this demo, we'll just update the map and recalculate standings
+        initialContentMap.set(fieldId, newScore); // Update the "saved" content in our map
+        recalculateAndRenderTables();
+        alert(`บันทึกผลการแข่งขันสำหรับ ${fieldId} เป็น: ${newScore} (นี่คือการจำลองการบันทึก)`);
+    }
+
+    // Function to handle changes in editable fields
+    function handleEditableChange(event) {
+        if (!isEditingEnabled) return;
+
+        const field = event.target;
+        const fieldId = field.id;
+        const newContent = field.textContent.trim();
+        const oldContent = initialContentMap.get(fieldId);
+
+        // Check if content has actually changed
+        if (newContent !== oldContent) {
+            // If it's a score input, validate format (e.g., "X-Y")
+            if (field.classList.contains('score-input')) {
+                const scoreRegex = /^\d+-\d+$/; // Matches "number-number"
+                if (newContent && !scoreRegex.test(newContent)) {
+                    alert('กรุณากรอกผลการแข่งขันในรูปแบบ H-A (เช่น 2-1)');
+                    field.textContent = oldContent || ''; // Revert to old content or clear if no old content
+                    return;
+                }
+                saveScore(fieldId, newContent); // Call save function for scores
+            } else if (field.id === 'summary-content') {
+                saveSummaryContent(newContent); // Call a specific function for summary
+            }
+        }
+    }
+
+    // Function to "save" summary content (currently just logging)
+    function saveSummaryContent(newContent) {
+        console.log("บันทึกสรุปผลการแข่งขัน:", newContent);
+        alert("บันทึกสรุปผลการแข่งขันแล้ว (นี่คือการจำลองการบันทึก)");
+    }
+
+    // Attach event listeners to all editable score fields
+    document.querySelectorAll('.score-input, #summary-content').forEach(field => {
+        field.addEventListener('blur', handleEditableChange); // When focus leaves the field
+        field.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent new line on Enter
+                field.blur(); // Trigger blur to save changes
+            }
+        });
+    });
+
+    // --- Password Control Event Listeners ---
+    unlockButton.addEventListener('click', () => {
+        if (passwordInput.value === CORRECT_PASSWORD) {
+            setEditableState(true);
+        } else {
+            alert('รหัสผ่านไม่ถูกต้อง!');
+            passwordInput.value = '';
+        }
+    });
+
+    lockButton.addEventListener('click', () => {
+        setEditableState(false);
+    });
+
+    // Initial state: locked
+    setEditableState(false);
+
+    // Function to read scores and recalculate all stats
+    function recalculateAndRenderTables() {
+        // Reset team stats
+        initializeTeamStats();
+
+        // Process Round 1 matches
+        round1Matches.forEach(match => {
+            const scoreElement = document.getElementById(match.id);
+            if (scoreElement) {
+                const scoreText = scoreElement.textContent.trim();
+                const scores = scoreText.split('-').map(s => parseInt(s, 10));
+
+                if (scores.length === 2 && !isNaN(scores[0]) && !isNaN(scores[1])) {
+                    // Update team names in teamStats if they don't have 'name' property
+                    if (!teamStats[match.team1].name) teamStats[match.team1].name = match.team1;
+                    if (!teamStats[match.team2].name) teamStats[match.team2].name = match.team2;
+
+                    updateTeamStats(match.team1, scores[0], match.team2, scores[1]);
+                }
+            }
+        });
+
+        // Render summary tables
+        renderSummaryTable("A", "summary-A-tbody");
+        renderSummaryTable("B", "summary-B-tbody");
+
+        // Optional: Update knockout stage team names if group stage is complete
+        updateKnockoutStageTeams();
+    }
+
+    // Function to update knockout stage team names
+    function updateKnockoutStageTeams() {
+        let teamsInGroupA = Object.values(teamStats).filter(team => team.group === "A");
+        let teamsInGroupB = Object.values(teamStats).filter(team => team.group === "B");
+
+        teamsInGroupA.sort((a, b) => {
+            if (b.points !== a.points) return b.points - a.points;
+            if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
+            return b.goalsFor - a.goalsFor;
+        });
+
+        teamsInGroupB.sort((a, b) => {
+            if (b.points !== a.points) return b.points - a.points;
+            if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
+            return b.goalsFor - a.goalsFor;
+        });
+
+        const winnerA = teamsInGroupA[0] ? teamsInGroupA[0].name : "ทีมชนะสาย A";
+        const runnerUpA = teamsInGroupA[1] ? teamsInGroupA[1].name : "ทีมรองชนะเลิศสาย A";
+        const winnerB = teamsInGroupB[0] ? teamsInGroupB[0].name : "ทีมชนะสาย B";
+        const runnerUpB = teamsInGroupB[1] ? teamsInGroupB[1].name : "ทีมรองชนะเลิศสาย B";
+
+        document.getElementById('teams-SFM21').textContent = `${winnerA} vs ${runnerUpB}`;
+        document.getElementById('teams-SFM22').textContent = `${winnerB} vs ${runnerUpA}`;
+
+        // Update Final Matchup after semi-finals are played (this would require more logic)
+        // For now, these will remain static placeholders unless scores are entered
+        const scoreSFM21 = document.getElementById('score-SFM21').textContent.trim();
+        const scoreSFM22 = document.getElementById('score-SFM22').textContent.trim();
+
+        let winnerSF21 = "ชนะ คู่ 21";
+        let loserSF21 = "แพ้ คู่ 21";
+        if (scoreSFM21.match(/^\d+-\d+$/)) {
+            const [s1, s2] = scoreSFM21.split('-').map(Number);
+            const teams = document.getElementById('teams-SFM21').textContent.split(' vs ');
+            if (s1 > s2) { winnerSF21 = teams[0]; loserSF21 = teams[1]; }
+            else if (s2 > s1) { winnerSF21 = teams[1]; loserSF21 = teams[0]; }
+        }
+
+        let winnerSF22 = "ชนะ คู่ 22";
+        let loserSF22 = "แพ้ คู่ 22";
+        if (scoreSFM22.match(/^\d+-\d+$/)) {
+            const [s1, s2] = scoreSFM22.split('-').map(Number);
+            const teams = document.getElementById('teams-SFM22').textContent.split(' vs ');
+            if (s1 > s2) { winnerSF22 = teams[0]; loserSF22 = teams[1]; }
+            else if (s2 > s1) { winnerSF22 = teams[1]; loserSF22 = teams[0]; }
+        }
+
+        document.getElementById('teams-FFM23').textContent = `${loserSF21} vs ${loserSF22}`;
+        document.getElementById('teams-FFM24').textContent = `${winnerSF21} vs ${winnerSF22}`;
+    }
+
+    // Initial calculation and rendering on page load
+    recalculateAndRenderTables();
+});
+
+// Function to control editable state of fields
+function updateEditableFields() {
+    const editableFields = document.querySelectorAll('.editable-field');
+    editableFields.forEach(field => {
+        // Only allow score inputs and the summary div to be contenteditable
+        if (field.classList.contains('score-input') || field.id === 'summary-content') {
+            field.contentEditable = isEditingEnabled;
+            field.classList.toggle('is-editable', isEditingEnabled);
+        } else {
+            // For fields like 'teams-SFM21', keep them non-editable by user directly
+            field.contentEditable = false;
+            field.classList.remove('is-editable');
+        }
+    });
+}
     </script>
 </body>
 </html>
